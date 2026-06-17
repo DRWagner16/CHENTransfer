@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemical Engineering Transfer Pathway</title>
+    <style>
+        :root {
+            --primary-color: #003366; /* Deep University Blue */
+            --secondary-color: #d9534f; /* Accent Crimson */
+            --bg-light: #f8f9fa;
+            --text-dark: #333333;
+            --card-bg: #ffffff;
+            --success-color: #2bc06a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .intro-alert {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            color: #856404;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 4px;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+        }
+
+        /* Timeline / Progression Styles */
+        .timeline {
+            position: relative;
+            margin: 2rem 0;
+            padding: 1rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            style: dotted;
+            height: 100%;
+            width: 4px;
+            background: #cbd5e1;
+            transform: translateX(-50%);
+        }
+
+        .timeline-block {
+            padding: 1rem 0;
+            width: 100%;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .timeline-block:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 50%;
+            top: 2rem;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--secondary-color);
+            border: 4px solid white;
+            box-shadow: 0 0 0 3px var(--secondary-color);
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .timeline-content {
+            width: 45%;
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .timeline-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .course-list {
+            list-style-type: none;
+            margin-top: 0.5rem;
+        }
+
+        .course-list li {
+            padding: 0.3rem 0;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        .course-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Interactive Checklist Section */
+        .checklist-section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-top: 3rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .checklist-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 1rem;
+            background: #fafafa;
+        }
+
+        .checklist-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.75rem;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 0.25rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+        }
+
+        .checkbox-group input {
+            margin-top: 0.3rem;
+            margin-right: 0.5rem;
+        }
+
+        /* Tracker Banner */
+        .status-banner {
+            background: var(--primary-color);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .status-banner h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar-container {
+            background: rgba(255,255,255,0.2);
+            height: 20px;
+            border-radius: 10px;
+            width: 100%;
+            margin: 0.5rem 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: var(--success-color);
+            height: 100%;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: #90cdf4;
+            text-decoration: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+            .timeline-block {
+                flex-direction: column !important;
+                padding-left: 40px;
+            }
+            .timeline-marker {
+                left: 20px;
+                top: 2rem;
+            }
+            .timeline-content {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Chemical Engineering Transfer Pathway</h1>
+        <p>Ensure a seamless transition into the department by completing your foundational coursework before your first Fall semester.</p>
+    </header>
+
+    <div class="container">
+        
+        <div class="intro-alert">
+            <strong>Important Transfer Note:</strong> To stay on track for a timely graduation, Chemical Engineering curriculum sequences strictly require specific prerequisites to enroll in junior-level core design courses in the Fall. Missing foundational courses can delay graduation by a full academic year.
+        </div>
+
+        <section>
+            <h2>Suggested Course Progression</h2>
+            <div class="timeline">
+                
+                <div class="timeline-block">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>Stage 1: Introductory Foundations</h3>
+                        <p>Typically completed in the first two semesters at your community college.</p>
+                        <ul class="course-list">
+                            <li><strong>Calculus I & II</strong> (Differential & Integral)</li>
+                            <li><strong>General Chemistry I & II</strong> (with Labs)</li>
+                            <li><strong>Engineering Mechanics</strong> (Statics/Physics I)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-block">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>Stage 2: Core Mathematics & Sciences</h3>
+                        <p>Typically completed by the third semester.</p>
+                        <ul class="course-list">
+                            <li><strong>Calculus III</strong> (Multivariable Calculus)</li>
+                            <li><strong>Organic Chemistry I</strong> (with Lab)</li>
+                            <li><strong>Physics II</strong> (Electricity & Magnetism)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-block">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>Stage 3: Pre-Transfer Finalization</h3>
+                        <p>Critical completion target during your final semester before transfer.</p>
+                        <ul class="course-list">
+                            <li><strong>Differential Equations</strong> (Linear Algebra combined preferred)</li>
+                            <li><strong>Organic Chemistry II</strong> (Highly recommended)</li>
+                            <li><strong>Intro to Material & Energy Balances</strong> (If available via cross-enrollment)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-block">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>Stage 4: University Arrival (Fall Entry)</h3>
+                        <p>Your baseline starting point upon official matriculation.</p>
+                        <ul class="course-list">
+                            <li>Ready for: <strong>Chemical Engineering Thermodynamics</strong></li>
+                            <li>Ready for: <strong>Fluid Mechanics / Transport Phenomena</strong></li>
+                            <li>Ready for: <strong>Unit Operations Laboratory</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="checklist-section">
+            <h2>Interactive Transfer Readiness Checklist</h2>
+            <p>Check off the courses you have completed (or are currently taking) to evaluate your enrollment readiness for the upcoming Fall semester.</p>
+            
+            <div class="grid">
+                <div class="checklist-card">
+                    <h4>Mathematics</h4>
+                    <label class="checkbox-group"><input type="checkbox" class="progress-check"> Calculus I</label><br>
+                    <label class="checkbox-group"><input type="checkbox" class="progress-check"> Calculus II</label><br>
+                    <label class="checkbox-group"><input type="checkbox" class="progress-check"> Calculus III</label><br>
+                    <label class="checkbox-group"><input type="checkbox" class="progress-check"> Differential Equations</label>
+                </div>
+
+                <div class="checklist-card">
+                    <h4>Chemistry</h4>
+                    <label class="checkbox-group"><input type="checkbox" class="progress-check"> General Chemistry I (w/ lab)</label><br>
+                    <label class="checkbox-group"><input type="checkbox" class="progress-check"> General Chemistry II (w/ lab)</label><br>
+                    <label class="checkbox-group"><input type="checkbox" class="progress-check"> Organic Chemistry I (w/ lab)</label><br>
+                    <label class="checkbox-group"><input type="checkbox" class="progress-check"> Organic Chemistry II</label>
+                </div>
+
+                <div class="checklist-card">
+                    <h4>Physics & Basic Eng.</h4>
+                    <label class="checkbox-group"><input type="checkbox" class="progress-check"> Physics I (Mechanics)</label><br>
+                    <label class="checkbox-group"><input type="checkbox" class="progress-check"> Physics II (E&M)</label><br>
+                    <label class="checkbox-group"><input type="checkbox" class="progress-check"> Intro to Engineering Computing</label>
+                </div>
+            </div>
+
+            <div class="status-banner">
+                <h3>Your Pathway Progress</h3>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <p id="statusMessage">Check courses above to track your readiness.</p>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p><strong>Questions About Your Transfer Credits?</strong></p>
+        <p>Contact the Chemical Engineering Advising Office at <a href="mailto:che-advising@university.edu">che-advising@university.edu</a></p>
+        <p style="margin-top: 1rem; font-size: 0.85rem; opacity: 0.7;">&copy; 2026 Department of Chemical Engineering. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Interactive Checklist Counter Logic
+        const checkboxes = document.querySelectorAll('.progress-check');
+        const progressBar = document.getElementById('progressBar');
+        const statusMessage = document.getElementById('statusMessage');
+
+        const totalCourses = checkboxes.length;
+
+        function updateProgress() {
+            const checkedCount = document.querySelectorAll('.progress-check:checked').length;
+            const percentage = Math.round((checkedCount / totalCourses) * 100);
+            
+            progressBar.style.width = percentage + '%';
+
+            if (percentage === 0) {
+                statusMessage.innerHTML = "Select the courses you've finished to map your transfer status.";
+            } else if (percentage < 50) {
+                statusMessage.innerHTML = `Keep going! You've completed <strong>${checkedCount}/${totalCourses}</strong> core prerequisites. Focus on finishing early math and general chemistry sequences.`;
+            } else if (percentage < 90) {
+                statusMessage.innerHTML = `Great progress! You have <strong>${checkedCount}/${totalCourses}</strong> courses complete. Ensure you finish Differential Equations and Organic Chemistry before Fall.`;
+            } else {
+                statusMessage.innerHTML = "🎉 <strong>Excellent! You are fully prepared.</strong> You have cleared the core prerequisite progression and are ready for junior-level core major courses this Fall!";
+            }
+        }
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateProgress);
+        });
+    </script>
+</body>
+</html>
