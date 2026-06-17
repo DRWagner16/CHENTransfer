@@ -62,37 +62,48 @@
         }
 
         .table-container {
-            overflow-x: auto;
             background: var(--card-bg);
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             margin-bottom: 3rem;
+            overflow: hidden;
         }
 
         table { width: 100%; border-collapse: collapse; text-align: left; }
-        th { background-color: #EDF2F7; color: var(--primary-color); padding: 1rem; font-weight: 600; border-bottom: 2px solid #CBD5E0; }
-        td { padding: 0.85rem 1rem; border-bottom: 1px solid #E2E8F0; font-size: 0.95rem; }
+        th { background-color: #EDF2F7; color: var(--primary-color); padding: 1.1rem 1rem; font-weight: 600; border-bottom: 2px solid #CBD5E0; }
+        td { padding: 0.9rem 1rem; border-bottom: 1px solid #E2E8F0; font-size: 0.95rem; vertical-align: middle; }
+        
+        .row-checkbox {
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+
+        tr.completed-row {
+            background-color: #F0FFF4 !important;
+        }
+
         tr:hover { background-color: #F8FAFC; }
 
         .badge { display: inline-block; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: bold; color: white; white-space: nowrap; }
+        .badge-math { background-color: #4A5568; }
         .badge-slcc { background-color: var(--slcc-blue); }
         .badge-uofu { background-color: var(--u-red); }
         .badge-critical { background-color: #E53E3E; }
 
-        .checklist-section { background: var(--card-bg); padding: 2.5rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 1.5rem; }
-        .checklist-card { border: 1px solid #E2E8F0; border-radius: 8px; padding: 1.5rem; background: #FAFAFA; }
-        .checklist-card h4 { font-size: 1.1rem; color: var(--primary-color); margin-bottom: 1rem; border-bottom: 2px solid #E2E8F0; padding-bottom: 0.4rem; }
+        /* Unified Tracker Banner below the table */
+        .status-banner {
+            background: #1A202C;
+            color: white;
+            padding: 2rem;
+            border-top: 4px solid var(--u-red);
+            text-align: center;
+        }
 
-        .checkbox-item { display: flex; align-items: flex-start; margin-bottom: 0.75rem; cursor: pointer; font-size: 0.95rem; }
-        .checkbox-item input { margin-top: 0.25rem; margin-right: 0.7rem; transform: scale(1.1); }
-
-        .status-banner { background: #1A202C; color: white; padding: 2rem; border-radius: 8px; margin-top: 2rem; text-align: center; }
         .status-banner h3 { font-size: 1.4rem; margin-bottom: 0.75rem; }
         .progress-bar-container { background: rgba(255,255,255,0.15); height: 24px; border-radius: 12px; width: 100%; margin: 1rem 0; overflow: hidden; border: 1px solid rgba(255,255,255,0.2); }
-        .progress-bar { background: linear-gradient(90deg, #48BB78, #38A169); height: 100%; width: 0%; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .progress-bar { background: linear-gradient(90deg, #48BB78, #38A169); height: 100%; width: 0%; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
 
-        footer { background: #1A202C; color: #A0AEC0; text-align: center; padding: 3rem 1rem; margin-top: 5rem; border-top: 4px solid var(--u-red); }
+        footer { background: #1A202C; color: #A0AEC0; text-align: center; padding: 3rem 1rem; margin-top: 4rem; border-top: 1px solid #2D3748; }
         footer a { color: #E6FFFA; text-decoration: underline; }
     </style>
 </head>
@@ -100,115 +111,172 @@
 
     <header>
         <h1>SLCC to University of Utah</h1>
-        <h2>Chemical Engineering Transfer Pathway</h2>
-        <p>Ensure your completed Salt Lake Community College courses align perfectly with the U's graduation track to join us as a full junior in the Fall.</p>
+        <h2>Chemical Engineering Transfer Pathway Map</h2>
+        <p>Check off your completed Salt Lake Community College courses directly inside the articulation map below to track your junior fall entry readiness.</p>
     </header>
 
     <div class="container">
         
         <div class="alert-box">
             <strong>⚠️ Engineering Prerequisite Sequencing Note:</strong> 
-            Chemical engineering coursework is heavily sequential. Missing critical sophomore classes like <strong>CHE 2800</strong> or <strong>ENGR 2300</strong> before transferring means you will be missing prerequisites for the junior-level design sequence, which can delay your graduation timeline by a full academic year.
+            Chemical engineering coursework is highly sequential. Missing critical sophomore classes like <strong>CHE 2800</strong> or <strong>ENGR 2300</strong> before transferring will block you from taking junior-level major sequences, delaying graduation by a full calendar year.
             <ul>
                 <li>All courses listed below must be completed with a letter grade of <strong>"C" or higher</strong> to transfer successfully.</li>
             </ul>
         </div>
 
-        <!-- Course Mapping Section -->
+        <!-- Integrated Course Mapping & Articulation Table -->
         <section>
-            <h2>Course Articulation & Equivalency Map</h2>
+            <h2>Course Articulation & Transfer Progress Engine</h2>
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th>SLCC Course & Title</th>
-                            <th>U of U Equivalent Course</th>
-                            <th>Pathway Milestone Group</th>
+                            <th style="width: 5%; text-align: center;">Done</th>
+                            <th style="width: 35%;">SLCC Course & Title</th>
+                            <th style="width: 40%;">U of U Equivalent Course</th>
+                            <th style="width: 20%;">Pathway Track</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <!-- Mathematics Track -->
+                        <tr>
+                            <td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="1"></td>
+                            <td><strong>ENGR 1010</strong> - Engineering Math Techniques</td>
+                            <td><strong>Elective / Math Prep Credit</strong></td>
+                            <td><span class="badge badge-math">Math Track</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="1"></td>
+                            <td><strong>MATH 1220</strong> - Calculus II</td>
+                            <td><strong>MATH 1220</strong> - Calculus II</td>
+                            <td><span class="badge badge-math">Math Track</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="1"></td>
+                            <td><strong>MATH 2210</strong> - Multivariate Calculus</td>
+                            <td><strong>MATH 2210</strong> - Calculus III</td>
+                            <td><span class="badge badge-math">Math Track</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="1.5"></td>
+                            <td><strong>MATH 2250</strong> - Differential Eq/Linear Algebra</td>
+                            <td><strong>MATH 2250</strong> - Diff Equations & Linear Algebra</td>
+                            <td><span class="badge badge-math">Math Track</span></td>
+                        </tr>
+
                         <!-- Chemistry Track -->
-                        <tr><td><strong>CHEM 1210</strong> - General Chemistry I</td><td><strong>CHEM 1210</strong> - General Chemistry I</td><td><span class="badge badge-slcc">Gen Chem Sequence</span></td></tr>
-                        <tr><td><strong>CHEM 1215</strong> - General Chemistry Lab I</td><td><strong>CHEM 1215</strong> - General Chemistry Lab I</td><td><span class="badge badge-slcc">Gen Chem Sequence</span></td></tr>
-                        <tr><td><strong>CHEM 1220</strong> - General Chemistry II</td><td><strong>CHEM 1220</strong> - General Chemistry II</td><td><span class="badge badge-slcc">Gen Chem Sequence</span></td></tr>
-                        <tr><td><strong>CHEM 1225</strong> - General Chemistry Lab II</td><td><strong>CHEM 1225</strong> - General Chemistry Lab II</td><td><span class="badge badge-slcc">Gen Chem Sequence</span></td></tr>
-                        <tr><td><strong>CHEM 2310</strong> - Organic Chemistry I</td><td><strong>CHEM 2310</strong> - Organic Chemistry I</td><td><span class="badge badge-slcc">Organic Track</span></td></tr>
-                        <tr><td><strong>CHEM 2315</strong> - Organic Chemistry Lab I</td><td><strong>CHEM 2311</strong> - Organic Chemistry Lab I</td><td><span class="badge badge-slcc">Not required for CH EN</span></td></tr>
+                        <tr>
+                            <td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td>
+                            <td><strong>CHEM 1210</strong> - General Chemistry I</td>
+                            <td><strong>CHEM 1210</strong> - General Chemistry I</td>
+                            <td><span class="badge badge-slcc">Chemistry Track</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td>
+                            <td><strong>CHEM 1215</strong> - General Chemistry Lab I</td>
+                            <td><strong>CHEM 1215</strong> - General Chemistry Lab I</td>
+                            <td><span class="badge badge-slcc">Chemistry Track</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td>
+                            <td><strong>CHEM 1220</strong> - General Chemistry II</td>
+                            <td><strong>CHEM 1220</strong> - General Chemistry II</td>
+                            <td><span class="badge badge-slcc">Chemistry Track</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td>
+                            <td><strong>CHEM 1225</strong> - General Chemistry Lab II</td>
+                            <td><strong>CHEM 1225</strong> - General Chemistry Lab II</td>
+                            <td><span class="badge badge-slcc">Chemistry Track</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td>
+                            <td><strong>CHEM 2310</strong> - Organic Chemistry I</td>
+                            <td><strong>CHEM 2310</strong> - Organic Chemistry I</td>
+                            <td><span class="badge badge-slcc">Chemistry Track</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td>
+                            <td><strong>CHEM 2315</strong> - Organic Chemistry Lab I</td>
+                            <td><strong>CHEM 2311</strong> - Organic Chemistry Lab I</td>
+                            <td><span class="badge badge-slcc">Chemistry Track</span></td>
+                        </tr>
                         
                         <!-- Physics Track -->
-                        <tr><td><strong>PHYS 2210</strong> - Physics for Sci & Eng I</td><td><strong>PHYS 2210</strong> - Physics I</td><td><span class="badge badge-slcc">Physics Sequence</span></td></tr>
-                        <tr><td><strong>PHYS 2215</strong> - Physics for Sci & Eng Lab I</td><td><strong>PHYS 2215</strong> - Physics Lab I</td><td><span class="badge badge-slcc">Not required for CH EN</span></td></tr>
-                        <tr><td><strong>PHYS 2220</strong> - Physics for Sci & Eng II</td><td><strong>PHYS 2220</strong> - Physics II</td><td><span class="badge badge-slcc">Physics Sequence</span></td></tr>
-                        <tr><td><strong>PHYS 2225</strong> - Physics for Sci & Eng Lab II</td><td><strong>PHYS 2225</strong> - Physics Lab II</td><td><span class="badge badge-slcc">Not required for CH EN</span></td></tr>
+                        <tr>
+                            <td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td>
+                            <td><strong>PHYS 2210</strong> - Physics for Science & Engineering I</td>
+                            <td><strong>PHYS 2210</strong> - Physics for Sci & Eng I</td>
+                            <td><span class="badge badge-slcc">Physics Track</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td>
+                            <td><strong>PHYS 2215</strong> - Physics for Sci & Eng Lab I</td>
+                            <td><strong>PHYS 2215</strong> - Physics Lab I</td>
+                            <td><span class="badge badge-slcc">Physics Track</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td>
+                            <td><strong>PHYS 2220</strong> - Physics for Science & Engineering II</td>
+                            <td><strong>PHYS 2220</strong> - Physics II</td>
+                            <td><span class="badge badge-slcc">Physics Track</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td>
+                            <td><strong>PHYS 2225</strong> - Physics for Sci & Eng Lab II</td>
+                            <td><strong>PHYS 2225</strong> - Physics Lab II</td>
+                            <td><span class="badge badge-slcc">Physics Track</span></td>
+                        </tr>
                         
                         <!-- Core Engineering Track -->
-                        <tr style="background-color: #FFF5F5;">
+                        <tr style="background-color: #FFF5F5;" id="row-che2800">
+                            <td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="2.0" id="che2800"></td>
                             <td><strong>CHE 2800</strong> - Fundamentals of Process Engineering</td>
                             <td><strong>CH EN 2800</strong> - Fundamentals of Process Engineering</td>
-                            <td><span class="badge badge-uofu">U of U Core</span> <span class="badge badge-critical">Critical Prereq</span></td>
+                            <td><span class="badge badge-uofu">U Core</span> <span class="badge badge-critical">Critical Block</span></td>
                         </tr>
-                        <tr><td><strong>ENGR 1040</strong> - Engineering Computing in Python, Excel, VBA</td><td><strong>CH EN 1703</strong> - Intro to ChE Computing</td><td><span class="badge badge-slcc">Engineering Tools</span></td></tr>
-                        <tr style="background-color: #FFF5F5;">
+                        <tr>
+                            <td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td>
+                            <td><strong>ENGR 1040</strong> - Engineering Computing in Python, Excel, VBA</td>
+                            <td><strong>CH EN 1703</strong> - Intro to ChE Computing</td>
+                            <td><span class="badge badge-slcc">Engineering Tools</span></td>
+                        </tr>
+                        <tr style="background-color: #FFF5F5;" id="row-engr2300">
+                            <td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="2.0" id="engr2300"></td>
                             <td><strong>ENGR 2300</strong> - Engineering Thermodynamics</td>
-                            <td><strong>CH EN 2300</strong> - Thermodynamics I</td>
-                            <td><span class="badge badge-uofu">U of U Core</span> <span class="badge badge-critical">Critical Prereq</span></td>
+                            <td><strong>CH EN 2300</strong> - Intro to Material & Energy Balances</td>
+                            <td><span class="badge badge-uofu">U Core</span> <span class="badge badge-critical">Critical Block</span></td>
                         </tr>
-                        <tr><td><strong>ENGR 2460</strong> - Numerical Methods in Python</td><td><strong>CH EN 2450</strong> - Numerical Methods</td><td><span class="badge badge-slcc">Engineering Tools</span></td></tr>
-                        <tr><td><strong>ENGR 2550</strong> - Applied Prob & Stats for Engineers</td><td><strong>CH EN 2550</strong> - Stats for ChemEs</td><td><span class="badge badge-slcc">Engineering Tools</span></td></tr>
-                        <tr><td><strong>ENGR 2950</strong> - Engineering Forum</td><td><strong>Engineering Seminar Credit</strong></td><td><span class="badge badge-slcc">Professional Dev</span></td></tr>
+                        <tr>
+                            <td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td>
+                            <td><strong>ENGR 2460</strong> - Numerical Methods in Python</td>
+                            <td><strong>Math/Numerical Requirement</strong></td>
+                            <td><span class="badge badge-slcc">Engineering Tools</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td>
+                            <td><strong>ENGR 2550</strong> - Applied Prob & Stats for Engineers</td>
+                            <td><strong>CH EN 2550</strong> - Stats for Engineers</td>
+                            <td><span class="badge badge-slcc">Engineering Tools</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.3"></td>
+                            <td><strong>ENGR 2950</strong> - Engineering Forum</td>
+                            <td><strong>Engineering Seminar Credit</strong></td>
+                            <td><span class="badge badge-slcc">Professional Dev</span></td>
+                        </tr>
                     </tbody>
                 </table>
-            </div>
-        </section>
 
-        <!-- Interactive Checklist Tracker -->
-        <section class="checklist-section">
-            <h2>Interactive Transfer Readiness Matrix</h2>
-            <p style="margin-bottom: 1.5rem;">Check off your completed SLCC courses to evaluate your current registration status for the upcoming Fall semester at the U.</p>
-            
-            <div class="grid">
-                <!-- Math Foundational Card -->
-                <div class="checklist-card">
-                    <h4>1. Math Foundational Prerequisites</h4>
-                    <label class="checkbox-item"><input type="checkbox" class="progress-check" data-weight="1"> MATH 1210 - Calculus I</label>
-                    <label class="checkbox-item"><input type="checkbox" class="progress-check" data-weight="1"> MATH 1220 - Calculus II</label>
-                    <label class="checkbox-item"><input type="checkbox" class="progress-check" data-weight="1"> MATH 2210 - Calculus III</label>
-                    <label class="checkbox-item"><input type="checkbox" class="progress-check" data-weight="1"> MATH 2250 - Diff Equations & Linear Algebra</label>
+                <!-- Embedded Dynamic Progress Metrics Panel -->
+                <div class="status-banner">
+                    <h3>Your Dynamic Integration Standing</h3>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    <p id="statusMessage">Check off your completed courses row-by-row above to instantly gauge enrollment status.</p>
                 </div>
-
-                <!-- Chemistry & Physics Card -->
-                <div class="checklist-card">
-                    <h4>2. Foundational Lab Sciences</h4>
-                    <label class="checkbox-item"><input type="checkbox" class="progress-check" data-weight="0.5"> CHEM 1210 & 1215 - Gen Chem I & Lab</label>
-                    <label class="checkbox-item"><input type="checkbox" class="progress-check" data-weight="0.5"> CHEM 1220 & 1225 - Gen Chem II & Lab</label>
-                    <label class="checkbox-item"><input type="checkbox" class="progress-check" data-weight="0.5"> CHEM 2310 & 2315 - Organic Chem I & Lab</label>
-                    <label class="checkbox-item"><input type="checkbox" class="progress-check" data-weight="0.5"> PHYS 2210 & 2215 - Physics I & Lab</label>
-                    <label class="checkbox-item"><input type="checkbox" class="progress-check" data-weight="0.5"> PHYS 2220 & 2225 - Physics II & Lab</label>
-                </div>
-
-                <!-- Engineering & Computing Card -->
-                <div class="checklist-card" style="border: 1px solid #FEB2B2; background-color: #FFF5F5;">
-                    <h4>3. Core Major & Computing Tracks</h4>
-                    <label class="checkbox-item" style="font-weight: bold; color: #C53030;">
-                        <input type="checkbox" class="progress-check" data-weight="2.0" id="che2800"> CHE 2800 - Process Engineering
-                    </label>
-                    <label class="checkbox-item" style="font-weight: bold; color: #C53030;">
-                        <input type="checkbox" class="progress-check" data-weight="2.0" id="engr2300"> ENGR 2300 - Thermodynamics
-                    </label>
-                    <label class="checkbox-item"><input type="checkbox" class="progress-check" data-weight="0.5"> ENGR 1040 - Python, Excel & VBA</label>
-                    <label class="checkbox-item"><input type="checkbox" class="progress-check" data-weight="0.5"> ENGR 2460 - Numerical Methods</label>
-                    <label class="checkbox-item"><input type="checkbox" class="progress-check" data-weight="0.5"> ENGR 2550 - Probability & Stats</label>
-                    <label class="checkbox-item"><input type="checkbox" class="progress-check" data-weight="0.3"> ENGR 2950 - Engineering Forum</label>
-                </div>
-            </div>
-
-            <!-- Dynamic Tracker Status Banner -->
-            <div class="status-banner">
-                <h3>Your Pathway Progress Status</h3>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" id="progressBar"></div>
-                </div>
-                <p id="statusMessage">Check off courses above to track your enrollment readiness status.</p>
             </div>
         </section>
 
@@ -237,8 +305,12 @@
         function evaluateStatus() {
             let currentWeight = 0;
             checkboxes.forEach(cb => {
+                const tr = cb.closest('tr');
                 if (cb.checked) {
                     currentWeight += parseFloat(cb.getAttribute('data-weight'));
+                    tr.classList.add('completed-row');
+                } else {
+                    tr.classList.remove('completed-row');
                 }
             });
 
@@ -249,16 +321,16 @@
 
             if (percentage === 0) {
                 statusMessage.innerHTML = "Select courses completed to evaluate your entry standing.";
-            } else if (percentage < 55) {
-                statusMessage.innerHTML = `<strong>Status: Foundational Phase (${percentage}%)</strong><br>You are taking care of critical math and science foundations. Keep expanding your core prerequisites!`;
+            } else if (percentage < 50) {
+                statusMessage.innerHTML = `<strong>Status: Foundational Phase (${percentage}%)</strong><br>You are systematically checking off your introductory math and lab science requirements. Keep it up!`;
             } else if (percentage < 95) {
                 if (!coreEngineeringComplete) {
-                    statusMessage.innerHTML = `<strong>Status: Prerequisite Blockage Risk (${percentage}%)</strong><br>⚠️ You have wrapped up standard sci/math classes, but missing <strong>SLCC CHE 2800</strong> or <strong>ENGR 2300</strong> introduces a junior registration lock. Contact your advisor immediately!`;
+                    statusMessage.innerHTML = `<strong>Status: Prerequisite Blockage Risk (${percentage}%)</strong><br>⚠️ You have great coverage on math and foundational science, but missing sophomore engineering core components like <strong>SLCC CHE 2800</strong> or <strong>ENGR 2300</strong> introduces a major curriculum block at the U. Contact advising!`;
                 } else {
-                    statusMessage.innerHTML = `<strong>Status: Core Technical Clear (${percentage}%)</strong><br>Excellent work! You've secured the core sophomore engineering tracks. Finalize your remaining items for smooth Fall scheduling.`;
+                    statusMessage.innerHTML = `<strong>Status: Core Technical Clear (${percentage}%)</strong><br>Excellent work! You have successfully cleared your high-stakes sophomore engineering design blockers. Finish remaining classes for a smooth transition.`;
                 }
             } else {
-                statusMessage.innerHTML = "🎉 <strong>Status: Fully Cleared for Direct Fall Integration! (100%)</strong><br>You have knocked out all requested articulation requirements. You are fully prepared to join upper-division junior design sequences!";
+                statusMessage.innerHTML = "🎉 <strong>Status: Fully Prepared for Direct Fall Integration! (100%)</strong><br>You have knocked out all articulation requirements for both institutions. You are clear to drop right into upper-division junior design sequences!";
             }
         }
 
