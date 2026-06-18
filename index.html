@@ -86,12 +86,11 @@
             list-style: none;
         }
 
-        /* FIXED: Allowed text to wrap naturally to a second line if columns are narrow */
         .semester-courses li {
             padding: 0.4rem 0;
             font-size: 0.82rem;
             border-bottom: 1px dashed #EDF2F7;
-            white-space: normal; /* Permits text wrapping */
+            white-space: normal;
             word-wrap: break-word;
         }
 
@@ -283,8 +282,8 @@
                     <tr>
                         <th style="width: 6%; text-align: center;">Done</th>
                         <th style="width: 32%;">U of U Course Requirement</th>
-                        <th style="width: 22%;">Required for Junior Year</th>
-                        <th style="width: 40%;" id="sourceSchoolCol">Equivalent Transfer Course</th>
+                        <th style="width: 44%;" id="sourceSchoolCol">Equivalent Transfer Course</th>
+                        <th style="width: 18%; text-align: center;">Required for Junior Year</th>
                     </tr>
                 </thead>
                 <tbody id="matrix-body">
@@ -294,11 +293,11 @@
             <div class="footnote" id="matrix-footnotes"></div>
 
             <div class="status-banner">
-                <h3>Your Pathway Completion Progress</h3>
+                <h3>Your Junior Year Prerequisite Progress</h3>
                 <div class="progress-bar-container">
                     <div class="progress-bar" id="progressBar"></div>
                 </div>
-                <p id="statusMessage">Check off courses you have completed with a 'C' or better to view your transfer progress score.</p>
+                <p id="statusMessage">Check off courses you have completed with a 'C' or better to view your junior year readiness progress.</p>
             </div>
         </div>
 
@@ -320,7 +319,7 @@
             "MATH 1060": { title: "Trigonometry", track: "math", critical: false, juniorPrereq: false, maps: { slcc: "MATH 1060", utahtech: "MATH 1060", snow: "MATH 1060", suu: "MATH 1060", weber: "MATH 1060", usu: "MATH 1060", uvu: "MATH 1060", byu: "Not Listed", ap_score: "Not Articulated" } },
             "MATH 1080": { title: "Pre-Calculus", track: "math", critical: false, juniorPrereq: false, maps: { slcc: "MATH 1080", utahtech: "MATH 1080", snow: "MATH 1080", suu: "MATH 1080", weber: "MATH 1080", usu: "MATH 1080", uvu: "MATH 113", byu: "Not Listed", ap_score: "Not Articulated" } },
             "MATH 1210": { title: "Calculus I", track: "math", critical: false, juniorPrereq: true, maps: { slcc: "MATH 1210", utahtech: "MATH 1210", snow: "MATH 1210", suu: "MATH 1210", weber: "MATH 1210", usu: "MATH 1210", uvu: "MATH 1210", byu: "MATH 112", ap_score: "AB - 4+ / BC - 3+ (or HL 5+)" } },
-            "MATH 1220": { title: "Calculus II", track: "math", critical: false, maps: { slcc: "MATH 1220", utahtech: "MATH 1220", snow: "MATH 1220", suu: "MATH 1220", weber: "MATH 1220", usu: "MATH 1220", uvu: "MATH 1220", byu: "MATH 113", ap_score: "BC - 4 or higher" } },
+            "MATH 1220": { title: "Calculus II", track: "math", critical: false, juniorPrereq: false, maps: { slcc: "MATH 1220", utahtech: "MATH 1220", snow: "MATH 1220", suu: "MATH 1220", weber: "MATH 1220", usu: "MATH 1220", uvu: "MATH 1220", byu: "MATH 113", ap_score: "BC - 4 or higher" } },
             "MATH 2210": { title: "Calculus III", track: "math", critical: false, juniorPrereq: true, maps: { slcc: "MATH 2210", utahtech: "MATH 2210", snow: "MATH 2210", suu: "MATH 2210", weber: "MATH 2210", usu: "MATH 2210", uvu: "MATH 2210", byu: "Not Listed", ap_score: "Not Articulated" } },
             "MATH 2250": { title: "Diff Eq / Linear Alg", track: "math", critical: false, juniorPrereq: true, maps: { slcc: "MATH 2250", utahtech: "MATH 2270 & 2280 OR 2250", snow: "MATH 2250", suu: "MATH 2250", weber: "MATH 2250", usu: "MATH 2250", uvu: "MATH 2270 & 2280 OR 2250", byu: "Not Listed", ap_score: "Not Articulated" } },
             "PHYS 2210": { title: "Physics Sci & Eng I", track: "science", critical: false, juniorPrereq: true, maps: { slcc: "PHYS 2210", utahtech: "PHYS 2210", snow: "PHYS 2210", suu: "PHYS 2210", weber: "PHYS 2210", usu: "PHYS 2210", uvu: "PHYS 2210", byu: "PHSCS 121", ap_score: "Physics C Mech: 4 or higher" } },
@@ -363,11 +362,12 @@
                     <td style="text-align: center;">
                         <input type="checkbox" class="progress-check row-checkbox" 
                                data-critical="${courseInfo.critical}" 
+                               data-junior-prereq="${courseInfo.juniorPrereq}"
                                onchange="evaluateStatus()">
                     </td>
                     <td><strong>${uCourseCode}</strong> - ${courseInfo.title}</td>
-                    <td style="text-align: center;">${juniorStatusCell}</td>
                     <td>${sourceEquivalent}</td>
+                    <td style="text-align: center;">${juniorStatusCell}</td>
                 `;
                 tbody.appendChild(row);
             }
@@ -391,15 +391,23 @@
             const progressBar = document.getElementById('progressBar');
             const statusMessage = document.getElementById('statusMessage');
 
-            const totalCourses = checkboxes.length;
-            let completedCount = 0;
+            let totalJuniorRequired = 0;
+            let completedJuniorRequired = 0;
             let missingCriticalBlock = false;
 
             checkboxes.forEach(cb => {
                 const tr = cb.closest('tr');
+                const isJuniorPrereq = cb.getAttribute('data-junior-prereq') === 'true';
+
+                if (isJuniorPrereq) {
+                    totalJuniorRequired++;
+                }
+
                 if (cb.checked) {
-                    completedCount++;
                     tr.classList.add('completed-row');
+                    if (isJuniorPrereq) {
+                        completedJuniorRequired++;
+                    }
                 } else {
                     tr.classList.remove('completed-row');
                     if (cb.getAttribute('data-critical') === 'true') {
@@ -408,21 +416,22 @@
                 }
             });
 
-            const percentage = totalCourses > 0 ? Math.round((completedCount / totalCourses) * 100) : 0;
+            // FIXED: Progress metric math isolated down strictly to Junior Prereqs
+            const percentage = totalJuniorRequired > 0 ? Math.round((completedJuniorRequired / totalJuniorRequired) * 100) : 0;
             progressBar.style.width = percentage + '%';
 
             if (percentage === 0) {
                 statusMessage.innerHTML = "Check off your completed courses to audit your junior entry readiness.";
             } else if (percentage < 50) {
-                statusMessage.innerHTML = `<strong>Current Status: Foundational Grounding (${completedCount}/${totalCourses} Courses)</strong><br>Great start! Keep checking off your foundational math, general education writing, and early science lab blocks.`;
+                statusMessage.innerHTML = `<strong>Current Status: Core Building Phase (${completedJuniorRequired}/${totalJuniorRequired} Junior Prerequisites Complete)</strong><br>Great start! Pushing through early math, chemistry, and science tracks keeps you on course for major upper-division requirements.`;
             } else if (percentage < 95) {
                 if (missingCriticalBlock) {
-                    statusMessage.innerHTML = `<strong>Current Status: Prerequisite Sequence Block Warning (${completedCount}/${totalCourses} Courses)</strong><br>⚠️ Notice: Your background tracks are progressing well, but missing key sophomore core components (like <strong>CH EN 2300</strong> or <strong>2800 equivalents</strong>) will halt your junior Fall status, delaying graduation plans by a full academic year.`;
+                    statusMessage.innerHTML = `<strong>Current Status: Prerequisite Sequence Block Warning (${completedJuniorRequired}/${totalJuniorRequired} Junior Prerequisites Complete)</strong><br>⚠️ Notice: Your background tracks are progressing well, but missing key sophomore core components (like <strong>CH EN 2300</strong> or <strong>2800 equivalents</strong>) will halt your junior Fall status, delaying graduation plans by a full academic year.`;
                 } else {
-                    statusMessage.innerHTML = `<strong>Current Status: Core Engineering Track Cleared (${completedCount}/${totalCourses} Courses)</strong><br>Excellent work! You have cleared your major's critical sophomore milestones. Finalize the remaining math or science items to verify graduation path timing.`;
+                    statusMessage.innerHTML = `<strong>Current Status: Core Engineering Track Cleared (${completedJuniorRequired}/${totalJuniorRequired} Junior Prerequisites Complete)</strong><br>Excellent work! You have cleared your major's critical sophomore milestones. Finalize the remaining checked elements to ensure timely registration integration.`;
                 }
             } else {
-                statusMessage.innerHTML = `🎉 <strong>Current Status: Fully Prepared for Direct Junior Enrollment! (${completedCount}/${totalCourses} Courses)</strong><br>All major lower-division course expectations have been tracked against the "ChemE Transfer-Articulation-Chart-2023-2024.docx" framework. Welcome to campus!`;
+                statusMessage.innerHTML = `🎉 <strong>Current Status: Fully Prepared for Direct Junior Enrollment! (${completedJuniorRequired}/${totalJuniorRequired} Junior Prerequisites Complete)</strong><br>All critical junior-level gateway requirements have been verified. Welcome to campus!`;
             }
         }
 
