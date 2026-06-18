@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>University of Utah: Chemical Engineering Transfer Pathway Portal</title>
+    <title>University of Utah Chemical Engineering Transfer Portal</title>
     <style>
         :root {
             --u-red: #CC0000;
-            --slcc-blue: #005A9C;
-            --uvu-green: #275D38; /* UVU Branding Green */
             --primary-color: #1A202C;
             --bg-light: #F7FAFC;
             --card-bg: #FFFFFF;
@@ -36,54 +34,103 @@
             padding: 3rem 1rem;
             text-align: center;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            transition: background 0.3s ease;
         }
 
-        header.slcc-theme { background: linear-gradient(135deg, var(--slcc-blue) 0%, var(--u-red) 100%); }
-        header.uvu-theme { background: linear-gradient(135deg, var(--uvu-green) 0%, var(--u-red) 100%); }
+        header h1 { font-size: 2.3rem; margin-bottom: 0.5rem; }
+        header h2 { font-size: 1.4rem; font-weight: 400; opacity: 0.9; }
+        header p { font-size: 1.05rem; max-width: 850px; margin: 1rem auto 0 auto; opacity: 0.9; }
 
-        header h1 { font-size: 2.3rem; margin-bottom: 0.75rem; }
-        header h2 { font-size: 1.5rem; font-weight: 400; opacity: 0.9; }
-        header p { font-size: 1.1rem; max-width: 850px; margin: 1rem auto 0 auto; opacity: 0.95; }
+        .container { max-width: 1250px; margin: 2rem auto; padding: 0 1.5rem; }
 
-        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1.5rem; }
+        /* Suggested Plan Styles */
+        .plan-grid {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
 
-        /* Institutional Tabs */
-        .tab-container {
+        @media (max-width: 1200px) {
+            .plan-grid {
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            }
+        }
+
+        .semester-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--primary-color);
+            padding: 1rem;
+        }
+
+        .semester-card.summer-term {
+            border-top-color: #D69E2E; /* Gold for Summer */
+            background-color: #FFFDF5;
+        }
+
+        .semester-card.sophomore-year {
+            border-top-color: var(--u-red);
+        }
+
+        .semester-card h4 {
+            color: var(--primary-color);
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            border-bottom: 2px solid #E2E8F0;
+            padding-bottom: 0.25rem;
+            white-space: nowrap;
+        }
+
+        .semester-courses {
+            list-style: none;
+        }
+
+        .semester-courses li {
+            padding: 0.4rem 0;
+            font-size: 0.82rem;
+            border-bottom: 1px dashed #EDF2F7;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .semester-courses li:last-child {
+            border-bottom: none;
+        }
+
+        /* Selector Styling */
+        .selector-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
             display: flex;
+            align-items: center;
             justify-content: center;
             gap: 1rem;
-            margin-bottom: 2rem;
+            flex-wrap: wrap;
         }
 
-        .tab-btn {
-            padding: 0.75rem 2rem;
+        .selector-card label {
             font-size: 1.1rem;
             font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .selector-card select {
+            padding: 0.6rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 4px;
             border: 2px solid #CBD5E0;
-            background-color: white;
-            color: var(--text-dark);
-            border-radius: 30px;
+            outline: none;
+            background-color: #FFF;
             cursor: pointer;
-            transition: all 0.2s ease-in-out;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-weight: 600;
         }
 
-        .tab-btn:hover {
-            border-color: #718096;
-        }
-
-        .tab-btn.active[data-school="slcc"] {
-            background-color: var(--slcc-blue);
-            color: white;
-            border-color: var(--slcc-blue);
-        }
-
-        .tab-btn.active[data-school="uvu"] {
-            background-color: var(--uvu-green);
-            color: white;
-            border-color: var(--uvu-green);
-        }
+        .selector-card select:focus { border-color: var(--u-red); }
 
         .alert-box {
             background-color: #FFFAF0;
@@ -105,7 +152,7 @@
 
         table { width: 100%; border-collapse: collapse; text-align: left; }
         th { background-color: #EDF2F7; color: var(--primary-color); padding: 1.1rem 1rem; font-weight: 600; border-bottom: 2px solid #CBD5E0; }
-        td { padding: 0.9rem 1rem; border-bottom: 1px solid #E2E8F0; font-size: 0.95rem; vertical-align: middle; }
+        td { padding: 0.9rem 1rem; border-bottom: 1px solid #E2E8F0; font-size: 0.95rem; vertical-align: middle; white-space: nowrap; }
         
         .row-checkbox { transform: scale(1.2); cursor: pointer; }
         tr.completed-row { background-color: #F0FFF4 !important; }
@@ -113,10 +160,13 @@
 
         .badge { display: inline-block; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: bold; color: white; white-space: nowrap; }
         .badge-math { background-color: #4A5568; }
-        .badge-slcc { background-color: var(--slcc-blue); }
-        .badge-uvu { background-color: var(--uvu-green); }
+        .badge-science { background-color: #2B6CB0; }
+        .badge-writing { background-color: #718096; }
         .badge-uofu { background-color: var(--u-red); }
         .badge-critical { background-color: #E53E3E; }
+        .badge-not-articulated { background-color: #CC0000; color: white; border: 1px solid #990000; animation: pulse 2s infinite; }
+
+        .prereq-marker { color: var(--success-color); font-weight: bold; font-size: 0.95rem; }
 
         .status-banner {
             background: #1A202C;
@@ -130,197 +180,257 @@
         .progress-bar-container { background: rgba(255,255,255,0.15); height: 24px; border-radius: 12px; width: 100%; margin: 1rem 0; overflow: hidden; border: 1px solid rgba(255,255,255,0.2); }
         .progress-bar { background: linear-gradient(90deg, #48BB78, #38A169); height: 100%; width: 0%; transition: width 0.4s ease; }
 
-        .school-route { display: none; }
-        .school-route.active-route { display: table-row-group; }
-
         footer { background: #1A202C; color: #A0AEC0; text-align: center; padding: 3rem 1rem; margin-top: 4rem; border-top: 1px solid #2D3748; }
         footer a { color: #E6FFFA; text-decoration: underline; }
+        .footnote { font-size: 0.8rem; color: #4A5568; margin-top: 0.5rem; text-align: left; padding: 1rem; line-height: 1.4; background: #EDF2F7; border-top: 1px solid #E2E8F0;}
     </style>
 </head>
 <body>
 
-    <header id="mainHeader" class="slcc-theme">
+    <header>
         <h1>University of Utah Chemical Engineering</h1>
-        <h2>Regional Institution Articulation Map</h2>
-        <p>Select your transferring institution below and check off your completed items to calculate your official junior-level standing.</p>
+        <h2>Transfer Articulation & Curriculum Portal</h2>
+        <p>Use this tool to track your transfer course equivalencies and view our standard lower-division recommended curriculum plan.</p>
     </header>
 
     <div class="container">
+
+        <h2>Standard U of U Lower-Division Curriculum Plan</h2>
+        <p style="margin-bottom: 1.5rem; color: #4A5568;">This timeline outlines how native students progress through lower-division requirements. Transfer paths can use the optional summer to break up heavy course loads.</p>
         
-        <div class="tab-container">
-            <button class="tab-btn active" data-school="slcc" onclick="switchSchool('slcc')">Salt Lake Community College (SLCC)</button>
-            <button class="tab-btn" data-school="uvu" onclick="switchSchool('uvu')">Utah Valley University (UVU)</button>
+        <div class="plan-grid">
+            <div class="semester-card">
+                <h4>Semester 1 (Fall)</h4>
+                <ul class="semester-courses">
+                    <li><strong>CH EN 1703</strong> - Intro to Chem. Eng.</li>
+                    <li><strong>CH EN 2953</strong> - Career & Prof Dev</li>
+                    <li><strong>MATH 1210</strong> - Calculus I</li>
+                    <li><strong>CHEM 1210</strong> - General Chemistry I</li>
+                    <li><strong>CHEM 1215</strong> - General Chemistry I Lab</li>
+                    <li><strong>WRTG 1010</strong> - Intro to Writing</li>
+                </ul>
+            </div>
+            <div class="semester-card">
+                <h4>Semester 2 (Spring)</h4>
+                <ul class="semester-courses">
+                    <li><strong>CH EN 1705</strong> - ChE Design & Innovation</li>
+                    <li><strong>MATH 1220</strong> - Calculus II</li>
+                    <li><strong>CHEM 1220</strong> - General Chemistry II</li>
+                    <li><strong>CHEM 1225</strong> - General Chemistry II Lab</li>
+                    <li><strong>PHYS 2210</strong> - Physics for Sci & Eng I</li>
+                    <li><strong>WRTG 2010</strong> - Intermediate Writing</li>
+                </ul>
+            </div>
+            <div class="semester-card summer-term">
+                <h4>Optional Summer Term</h4>
+                <ul class="semester-courses">
+                    <li><strong>MATH 2210</strong> - Calculus III</li>
+                    <li style="color: #B7791F;"><em>General Education / Electives</em></li>
+                    <li style="color: #B7791F;"><em>Catch-up Math if required</em></li>
+                    <li style="color: #B7791F;"><em>Pre-major foundational labs</em></li>
+                </ul>
+            </div>
+            <div class="semester-card sophomore-year">
+                <h4>Semester 3 (Fall)</h4>
+                <ul class="semester-courses">
+                    <li><strong>CH EN 2300</strong> - Thermodynamics I</li>
+                    <li><strong>CH EN 2450</strong> - Numerical Methods</li>
+                    <li><strong>MATH 2250</strong> - Diff Eq & Linear Algebra</li>
+                    <li><strong>PHYS 2220</strong> - Physics for Sci & Eng II</li>
+                </ul>
+            </div>
+            <div class="semester-card sophomore-year">
+                <h4>Semester 4 (Spring)</h4>
+                <ul class="semester-courses">
+                    <li><strong>CH EN 2800</strong> - Process Engineering Fund.</li>
+                    <li><strong>CH EN 2550</strong> - Stats for Chemical Eng.</li>
+                    <li><strong>CH EN 2953</strong> - Undergrad Seminar (suggested)</li>
+                    <li><strong>CHEM 2310</strong> - Organic Chemistry I</li>
+                </ul>
+            </div>
+        </div>
+
+        <hr style="border: 0; border-top: 2px solid #E2E8F0; margin-bottom: 3rem;">
+
+        <h2>Interactive Transfer Evaluation Engine</h2>
+        
+        <div class="selector-card">
+            <label for="schoolSelect">Select Your Transfer Institution:</label>
+            <select id="schoolSelect" onchange="loadSchoolPathway()">
+                <option value="slcc">Salt Lake Community College (SLCC)</option>
+                <option value="utahtech">Utah Tech University</option>
+                <option value="snow">Snow College</option>
+                <option value="suu">Southern Utah University (SUU)</option>
+                <option value="weber">Weber State University</option>
+                <option value="usu">Utah State University (USU / USUE)</option>
+                <option value="uvu">Utah Valley University (UVU)</option>
+                <option value="byu">Brigham Young University (BYU)</option>
+                <option value="ap_score">Advanced Placement (AP) Exam Scores</option>
+            </select>
         </div>
         
         <div class="alert-box">
-            <strong>⚠️ Sequential Milestone Advisory:</strong> 
-            Core major components (like Material Balances or basic Thermodynamics) are strictly monitored prerequisites for upper-division design blocks at the U. Leaving these unfulfilled can delay graduation tracks by a full academic year.
+            <strong>⚠️ Prerequisite Milestone Notice:</strong> 
+            Chemical Engineering major blocks are heavily linear. Missing foundational courses (especially sophomore classes like <strong>CH EN 2300</strong> or <strong>CH EN 2800 equivalents</strong>) will prevent enrollment in junior-level design tracks in your first university Fall semester.
             <ul>
-                <li>All transferring items must meet a baseline standard of a <strong>"C" or better</strong> to qualify for articulation credit.</li>
+                <li>All transferable classes require a minimum grade of <strong>"C" or better</strong>.</li>
             </ul>
         </div>
 
-        <section>
-            <h2 id="tableHeading">SLCC Transfer Progress Engine</h2>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th style="width: 5%; text-align: center;">Done</th>
-                            <th style="width: 35%;" id="sourceSchoolCol">SLCC Course & Title</th>
-                            <th style="width: 40%;">U of U Equivalent Course</th>
-                            <th style="width: 20%;">Pathway Track</th>
-                        </tr>
-                    </thead>
-                    
-                    <tbody id="slcc-tbody" class="school-route active-route">
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="1"></td><td><strong>ENGR 1010</strong> - Engineering Math Techniques</td><td><strong>Elective / Math Prep Credit</strong></td><td><span class="badge badge-math">Math Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="1"></td><td><strong>MATH 1220</strong> - Calculus II</td><td><strong>MATH 1220</strong> - Calculus II</td><td><span class="badge badge-math">Math Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="1"></td><td><strong>MATH 2210</strong> - Multivariate Calculus</td><td><strong>MATH 2210</strong> - Calculus III</td><td><span class="badge badge-math">Math Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="1.5"></td><td><strong>MATH 2250</strong> - Differential Eq/Linear Algebra</td><td><strong>MATH 2250</strong> - Diff Equations & Linear Algebra</td><td><span class="badge badge-math">Math Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td><td><strong>CHEM 1210</strong> - General Chemistry I</td><td><strong>CHEM 1210</strong> - General Chemistry I</td><td><span class="badge badge-slcc">Chemistry Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td><td><strong>CHEM 1215</strong> - General Chemistry Lab I</td><td><strong>CHEM 1215</strong> - General Chemistry Lab I</td><td><span class="badge badge-slcc">Chemistry Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td><td><strong>CHEM 1220</strong> - General Chemistry II</td><td><strong>CHEM 1220</strong> - General Chemistry II</td><td><span class="badge badge-slcc">Chemistry Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td><td><strong>CHEM 1225</strong> - General Chemistry Lab II</td><td><strong>CHEM 1225</strong> - General Chemistry Lab II</td><td><span class="badge badge-slcc">Chemistry Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td><td><strong>CHEM 2310</strong> - Organic Chemistry I</td><td><strong>CHEM 2310</strong> - Organic Chemistry I</td><td><span class="badge badge-slcc">Chemistry Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td><td><strong>CHEM 2315</strong> - Organic Chemistry Lab I</td><td><strong>CHEM 2311</strong> - Organic Chemistry Lab I</td><td><span class="badge badge-slcc">Chemistry Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td><td><strong>PHYS 2210</strong> - Physics for Sci & Eng I</td><td><strong>PHYS 2210</strong> - Physics for Sci & Eng I</td><td><span class="badge badge-slcc">Physics Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td><td><strong>PHYS 2215</strong> - Physics for Sci & Eng Lab I</td><td><strong>PHYS 2215</strong> - Physics Lab I</td><td><span class="badge badge-slcc">Physics Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td><td><strong>PHYS 2220</strong> - Physics for Sci & Eng II</td><td><strong>PHYS 2220</strong> - Physics II</td><td><span class="badge badge-slcc">Physics Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td><td><strong>PHYS 2225</strong> - Physics for Sci & Eng Lab II</td><td><strong>PHYS 2225</strong> - Physics Lab II</td><td><span class="badge badge-slcc">Physics Track</span></td></tr>
-                        <tr style="background-color: #FFF5F5;"><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox core-block" data-weight="2.0"></td><td><strong>CHE 2800</strong> - Fundamentals of Process Engineering</td><td><strong>CH EN 2800</strong> - Fundamentals of Process Engineering</td><td><span class="badge badge-uofu">U Core</span> <span class="badge badge-critical">Critical Block</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td><td><strong>ENGR 1040</strong> - Engineering Computing (Python/VBA)</td><td><strong>CH EN 1703</strong> - Intro to ChE Computing</td><td><span class="badge badge-slcc">Engineering Tools</span></td></tr>
-                        <tr style="background-color: #FFF5F5;"><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox core-block" data-weight="2.0"></td><td><strong>ENGR 2300</strong> - Engineering Thermodynamics</td><td><strong>CH EN 2300</strong> - Intro to Material & Energy Balances</td><td><span class="badge badge-uofu">U Core</span> <span class="badge badge-critical">Critical Block</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td><td><strong>ENGR 2460</strong> - Numerical Methods in Python</td><td><strong>Math/Numerical Requirement</strong></td><td><span class="badge badge-slcc">Engineering Tools</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td><td><strong>ENGR 2550</strong> - Applied Prob & Stats for Engineers</td><td><strong>CH EN 2550</strong> - Stats for Engineers</td><td><span class="badge badge-slcc">Engineering Tools</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.3"></td><td><strong>ENGR 2950</strong> - Engineering Forum</td><td><strong>Engineering Seminar Credit</strong></td><td><span class="badge badge-slcc">Professional Dev</span></td></tr>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 6%; text-align: center;">Done</th>
+                        <th style="width: 32%;">U of U Course Requirement</th>
+                        <th style="width: 22%;">Required for Junior Year</th>
+                        <th style="width: 40%;" id="sourceSchoolCol">Equivalent Transfer Course</th>
+                    </tr>
+                </thead>
+                <tbody id="matrix-body">
                     </tbody>
+            </table>
 
-                    <tbody id="uvu-tbody" class="school-route">
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="1"></td><td><strong>MATH 1210</strong> - Calculus I</td><td><strong>MATH 1210</strong> - Calculus I</td><td><span class="badge badge-math">Math Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="1"></td><td><strong>MATH 1220</strong> - Calculus II</td><td><strong>MATH 1220</strong> - Calculus II</td><td><span class="badge badge-math">Math Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="1"></td><td><strong>MATH 2210</strong> - Calculus III</td><td><strong>MATH 2210</strong> - Calculus III</td><td><span class="badge badge-math">Math Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="1.5"></td><td><strong>MATH 2250</strong> - Diff Equations & Linear Algebra</td><td><strong>MATH 2250</strong> - Diff Equations & Linear Algebra</td><td><span class="badge badge-math">Math Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td><td><strong>CHEM 1210</strong> - Principles of Chemistry I</td><td><strong>CHEM 1210</strong> - General Chemistry I</td><td><span class="badge badge-uvu">Chemistry Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td><td><strong>CHEM 1215</strong> - Principles of Chemistry I Lab</td><td><strong>CHEM 1215</strong> - General Chemistry Lab I</td><td><span class="badge badge-uvu">Chemistry Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td><td><strong>CHEM 1220</strong> - Principles of Chemistry II</td><td><strong>CHEM 1220</strong> - General Chemistry II</td><td><span class="badge badge-uvu">Chemistry Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td><td><strong>CHEM 1225</strong> - Principles of Chemistry II Lab</td><td><strong>CHEM 1225</strong> - General Chemistry Lab II</td><td><span class="badge badge-uvu">Chemistry Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td><td><strong>CHEM 2310</strong> - Organic Chemistry I</td><td><strong>CHEM 2310</strong> - Organic Chemistry I</td><td><span class="badge badge-uvu">Chemistry Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td><td><strong>CHEM 2315</strong> - Organic Chemistry I Lab</td><td><strong>CHEM 2311</strong> - Organic Chemistry Lab I</td><td><span class="badge badge-uvu">Chemistry Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td><td><strong>PHYS 2210</strong> - Physics for Sci & Eng I</td><td><strong>PHYS 2210</strong> - Physics for Sci & Eng I</td><td><span class="badge badge-uvu">Physics Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td><td><strong>PHYS 2215</strong> - Physics for Sci & Eng I Lab</td><td><strong>PHYS 2215</strong> - Physics Lab I</td><td><span class="badge badge-uvu">Physics Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td><td><strong>PHYS 2220</strong> - Physics for Sci & Eng II</td><td><strong>PHYS 2220</strong> - Physics II</td><td><span class="badge badge-uvu">Physics Track</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td><td><strong>PHYS 2225</strong> - Physics for Sci & Eng II Lab</td><td><strong>PHYS 2225</strong> - Physics Lab II</td><td><span class="badge badge-uvu">Physics Track</span></td></tr>
-                        <tr style="background-color: #FFF5F5;"><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox core-block" data-weight="3.0"></td><td><strong>ENGR 2300</strong> - Engineering Thermodynamics</td><td><strong>CH EN 2300 & CH EN 2800 Equivalent Target</strong></td><td><span class="badge badge-uofu">U Core</span> <span class="badge badge-critical">Critical Block</span></td></tr>
-                        <tr><td style="text-align: center;"><input type="checkbox" class="progress-check row-checkbox" data-weight="0.5"></td><td><strong>ENGR 1030</strong> - Engineering Programming (or CS 1400)</td><td><strong>CH EN 1703</strong> - Intro to ChE Computing</td><td><span class="badge badge-uvu">Engineering Tools</span></td></tr>
-                    </tbody>
-                </table>
+            <div class="footnote" id="matrix-footnotes"></div>
 
-                <div class="status-banner">
-                    <h3>Your Integration Alignment Metric</h3>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar" id="progressBar"></div>
-                    </div>
-                    <p id="statusMessage">Check off your completed courses row-by-row above to instantly gauge enrollment standing.</p>
+            <div class="status-banner">
+                <h3>Your Pathway Completion Progress</h3>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progressBar"></div>
                 </div>
+                <p id="statusMessage">Check off courses you have completed with a 'C' or better to view your transfer progress score.</p>
             </div>
-        </section>
+        </div>
 
     </div>
 
     <footer>
         <p><strong>University of Utah Department of Chemical Engineering</strong></p>
-        <p>Seeking an official milestone waiver or want to cross-verify an elective substitution? Reach out to our transfer advisor.</p>
-        <p style="margin-top: 1rem;">Office of Advising: <a href="mailto:che-advising@utah.edu">che-advising@utah.edu</a> | <a href="https://che.utah.edu" target="_blank">che.utah.edu</a></p>
-        <p style="margin-top: 1.5rem; font-size: 0.8rem; opacity: 0.6;">&copy; 2026 University of Utah College of Engineering. Course criteria synchronized to official AY 2026-2027 articulation tables.</p>
+        <p>Office of Advising: <a href="mailto:che-advising@utah.edu">che-advising@utah.edu</a> | <a href="https://che.utah.edu" target="_blank">che.utah.edu</a></p>
+        <p style="margin-top: 1.5rem; font-size: 0.8rem; opacity: 0.6;">&copy; 2026 University of Utah College of Engineering. Course data verified via standard "ChemE Transfer-Articulation-Chart-2023-2024.docx" parameters.</p>
     </footer>
 
     <script>
-        let currentSchool = 'slcc';
+        // Data matrix derived exactly from ChemE Transfer-Articulation-Chart-2023-2024.docx
+        const masterArticulationData = {
+            "CHEM 1210": { title: "General Chemistry I", track: "science", critical: false, juniorPrereq: true, maps: { slcc: "CHEM 1210", utahtech: "CHEM 1210", snow: "CHEM 1210", suu: "CHEM 1210", weber: "CHEM 1210", usu: "CHEM 1210", uvu: "CHEM 1210", byu: "CHEM 1054 or higher", ap_score: "Score 5 or higher" } },
+            "CHEM 1215": { title: "Gen Chem I Lab", track: "science", critical: false, juniorPrereq: true, maps: { slcc: "CHEM 1215", utahtech: "CHEM 1215", snow: "CHEM 1215", suu: "CHEM 1215", weber: "CHEM 1210", usu: "CHEM 1215", uvu: "CHEM 1215", byu: "CHEM 107", ap_score: "Turn in AP Lab Notebook ˄" } },
+            "MATH 1010": { title: "Intermediate Algebra", track: "math", critical: false, juniorPrereq: false, maps: { slcc: "MATH 1010", utahtech: "MATH 1010", snow: "MATH 1010", suu: "MATH 1010", weber: "MATH 1010", usu: "MATH 1010", uvu: "MATH 1010", byu: "MATH 112", ap_score: "Not Applicable via AP" } },
+            "MATH 1050": { title: "College Algebra", track: "math", critical: false, juniorPrereq: false, maps: { slcc: "MATH 1050", utahtech: "MATH 1050", snow: "MATH 1050", suu: "MATH 1050", weber: "MATH 1050", usu: "MATH 1050", uvu: "MATH 1050", byu: "Standard Level", ap_score: "Score 5 or higher" } },
+            "MATH 1060": { title: "Trigonometry", track: "math", critical: false, juniorPrereq: false, maps: { slcc: "MATH 1060", utahtech: "MATH 1060", snow: "MATH 1060", suu: "MATH 1060", weber: "MATH 1060", usu: "MATH 1060", uvu: "MATH 1060", byu: "Not Listed", ap_score: "Not Articulated" } },
+            "MATH 1080": { title: "Pre-Calculus", track: "math", critical: false, juniorPrereq: false, maps: { slcc: "MATH 1080", utahtech: "MATH 1080", snow: "MATH 1080", suu: "MATH 1080", weber: "MATH 1080", usu: "MATH 1080", uvu: "MATH 113", byu: "Not Listed", ap_score: "Not Articulated" } },
+            "MATH 1210": { title: "Calculus I", track: "math", critical: false, juniorPrereq: true, maps: { slcc: "MATH 1210", utahtech: "MATH 1210", snow: "MATH 1210", suu: "MATH 1210", weber: "MATH 1210", usu: "MATH 1210", uvu: "MATH 1210", byu: "MATH 112", ap_score: "AB - 4+ / BC - 3+ (or HL 5+)" } },
+            "MATH 1220": { title: "Calculus II", track: "math", critical: false, maps: { slcc: "MATH 1220", utahtech: "MATH 1220", snow: "MATH 1220", suu: "MATH 1220", weber: "MATH 1220", usu: "MATH 1220", uvu: "MATH 1220", byu: "MATH 113", ap_score: "BC - 4 or higher" } },
+            "MATH 2210": { title: "Calculus III", track: "math", critical: false, juniorPrereq: true, maps: { slcc: "MATH 2210", utahtech: "MATH 2210", snow: "MATH 2210", suu: "MATH 2210", weber: "MATH 2210", usu: "MATH 2210", uvu: "MATH 2210", byu: "Not Listed", ap_score: "Not Articulated" } },
+            "MATH 2250": { title: "Diff Eq / Linear Alg", track: "math", critical: false, juniorPrereq: true, maps: { slcc: "MATH 2250", utahtech: "MATH 2270 & 2280 OR 2250", snow: "MATH 2250", suu: "MATH 2250", weber: "MATH 2250", usu: "MATH 2250", uvu: "MATH 2270 & 2280 OR 2250", byu: "Not Listed", ap_score: "Not Articulated" } },
+            "PHYS 2210": { title: "Physics Sci & Eng I", track: "science", critical: false, juniorPrereq: true, maps: { slcc: "PHYS 2210", utahtech: "PHYS 2210", snow: "PHYS 2210", suu: "PHYS 2210", weber: "PHYS 2210", usu: "PHYS 2210", uvu: "PHYS 2210", byu: "PHSCS 121", ap_score: "Physics C Mech: 4 or higher" } },
+            "PHYS 2220": { title: "Physics Sci & Eng II", track: "science", critical: false, juniorPrereq: true, maps: { slcc: "PHYS 2220", utahtech: "PHYS 2220", snow: "PHYS 2220", suu: "PHYS 2220", weber: "PHYS 2220", usu: "PHYS 2220", uvu: "PHYS 2220", byu: "PHSCS 220", ap_score: "Physics C E&M: 4 or higher" } },
+            "WRTG 1010": { title: "Intro to Writing", track: "writing", critical: false, juniorPrereq: false, maps: { slcc: "ENGL 1010", utahtech: "ENGL 1010", snow: "ENGL 1010", suu: "ENGL 1010", weber: "ENGL 1010", usu: "ENGL 1010", uvu: "ENGL 1010", byu: "Not Listed", ap_score: "4 or higher" } },
+            "WRTG 2010": { title: "Intermediate Writing", track: "writing", critical: false, juniorPrereq: false, maps: { slcc: "ENGL 2010 or 2100", utahtech: "ENGL 2010", snow: "ENGL 2010", suu: "ENGL 2010", weber: "ENGL 2010", usu: "ENGL 2010", uvu: "ENGL 2010", byu: "ENGL 150", ap_score: "4 or higher ǂ" } },
+            "CH EN 1703": { title: "Intro to ChE Computing", track: "uofu", critical: false, juniorPrereq: false, maps: { slcc: "CHE 1040", utahtech: "CS 1410 or CS 3430", snow: "ENGR 1400", suu: "CSIS 1300", weber: "CS 1400", usu: "CS 1410 or CS 3430", uvu: "CS 1400", byu: "CH EN 170" } },
+            "CH EN 1705": { title: "Design & Innovation", track: "uofu", critical: false, juniorPrereq: true, maps: { slcc: "PHYS 2215, 2225, & CHEM 2315*", utahtech: "PHYS 2215, 2225, & CHEM 2315*", snow: "PHYS 2215, 2225, & CHEM 2315*", suu: "PHYS 2215, 2225, & CHEM 2315*", weber: "PHYS 2215, 2225, & CHEM 2315*", usu: "PHYS 2215, 2225, & CHEM 2315*", uvu: "PHYS 2215, 2225, & CHEM 2315*", byu: "Not Tracked" } },
+            "CH EN 2300": { title: "Thermodynamics I", track: "uofu", critical: true, juniorPrereq: true, maps: { slcc: "ENGR 2300", utahtech: "MAE 2300", snow: "ENGR 2300", suu: "ME 3200", weber: "ENGR 2300", usu: "MAE 2300", uvu: "ENGR 2300", byu: "ME EN 321" } },
+            "CH EN 2450": { title: "Numerical Methods", track: "uofu", critical: false, juniorPrereq: true, maps: { slcc: "CHE 2450", utahtech: "ENGR 2450", snow: "ENGR 2450", suu: "Not Articulated", weber: "Not Articulated", usu: "ENGR 2450", uvu: "ENGR 2450", byu: "CH EN 263" } },
+            "CH EN 2550": { title: "Stats for Chemical Eng.", track: "uofu", critical: false, juniorPrereq: true, maps: { slcc: "ENGR 2550", utahtech: "Not Articulated", snow: "Not Articulated", suu: "Not Articulated", weber: "Not Articulated", usu: "Not Articulated", uvu: "Not Articulated", byu: "Not Articulated" } },
+            "CH EN 2800": { title: "Process Eng Fund.", track: "uofu", critical: true, juniorPrereq: true, maps: { slcc: "CHE 2800", utahtech: "Not Articulated", snow: "Not Articulated", suu: "Not Articulated", weber: "Not Articulated", usu: "Not Articulated", uvu: "Not Articulated", byu: "CH EN 273" } },
+            "CH EN 2953": { title: "Undergrad Seminar", track: "uofu", critical: false, juniorPrereq: false, maps: { slcc: "ENGR 2950", utahtech: "Not Articulated", snow: "Not Articulated", suu: "Not Articulated", weber: "Not Articulated", usu: "Not Articulated", uvu: "Not Articulated", byu: "CH EN 291" } }
+        };
 
-        function switchSchool(schoolId) {
-            currentSchool = schoolId;
-            
-            // Toggle active tabs
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelector(`.tab-btn[data-school="${schoolId}"]`).classList.add('active');
-            
-            // Adjust header backgrounds dynamically 
-            const header = document.getElementById('mainHeader');
-            header.className = '';
-            header.classList.add(`${schoolId}-theme`);
-            
-            // Update labels
-            const tableHeading = document.getElementById('tableHeading');
-            const sourceSchoolCol = document.getElementById('sourceSchoolCol');
-            
-            if(schoolId === 'slcc') {
-                tableHeading.innerText = "SLCC Transfer Progress Engine";
-                sourceSchoolCol.innerText = "SLCC Course & Title";
-            } else {
-                tableHeading.innerText = "UVU Transfer Progress Engine";
-                sourceSchoolCol.innerText = "UVU Course & Title";
+        function loadSchoolPathway() {
+            const selectedSchool = document.getElementById('schoolSelect').value;
+            document.getElementById('sourceSchoolCol').innerText = `Equivalent Transfer Course`;
+
+            const tbody = document.getElementById('matrix-body');
+            tbody.innerHTML = ''; 
+
+            for (const [uCourseCode, courseInfo] of Object.entries(masterArticulationData)) {
+                let sourceEquivalent = courseInfo.maps[selectedSchool] || "Not Articulated";
+                
+                // Active prerequisite checkmark column rendering
+                const juniorStatusCell = courseInfo.juniorPrereq 
+                    ? `<span class="prereq-marker">✔️ Required</span>` 
+                    : `<span style="color:#A0AEC0;">—</span>`;
+
+                // Handle the Not Articulated formatting switch
+                if (sourceEquivalent === "Not Articulated" || sourceEquivalent === "Not Tracked" || sourceEquivalent === "Not Listed") {
+                    sourceEquivalent = `<span class="badge badge-not-articulated">⚠️ Direct Evaluation Needed</span>`;
+                } else {
+                    sourceEquivalent = `<strong>${sourceEquivalent}</strong>`;
+                }
+
+                const row = document.createElement('tr');
+                if (courseInfo.critical) row.style.backgroundColor = "#FFF5F5";
+
+                row.innerHTML = `
+                    <td style="text-align: center;">
+                        <input type="checkbox" class="progress-check row-checkbox" 
+                               data-critical="${courseInfo.critical}" 
+                               onchange="evaluateStatus()">
+                    </td>
+                    <td><strong>${uCourseCode}</strong> - ${courseInfo.title}</td>
+                    <td style="text-align: center;">${juniorStatusCell}</td>
+                    <td>${sourceEquivalent}</td>
+                `;
+                tbody.appendChild(row);
             }
 
-            // Toggle table body routes
-            document.querySelectorAll('.school-route').forEach(tbody => tbody.classList.remove('active-route'));
-            document.getElementById(`${schoolId}-tbody`).classList.add('active-route');
+            const footnoteContainer = document.getElementById('matrix-footnotes');
+            let footnoteHTML = `<strong>Matrix Footnotes & Articulation System Caveats:</strong><br>`;
+            footnoteHTML += `* Students must take 3 regional labs (PHYS 2215, PHYS 2225, and CHEM 2315) to completely satisfy the U's CH EN 1705 requirement.<br>`;
+            footnoteHTML += `*** Transfer Undergraduate Seminar courses can fulfill exactly one required seminar milestone, but not both.<br>`;
+            
+            if (selectedSchool === 'ap_score') {
+                footnoteHTML += `˄ Save your physical Lab notebook and turn it in directly to the U Chemistry department by August 6th for Fall curriculum clearance evaluations.<br>`;
+                footnoteHTML += `ǂ Only applicable for official AP examinations administered in Summer 2022 or earlier periods.<br>`;
+            }
+            footnoteContainer.innerHTML = footnoteHTML;
 
-            // Recalculate status for the freshly chosen pathway
             evaluateStatus();
         }
 
         function evaluateStatus() {
-            const activeTbody = document.getElementById(`${currentSchool}-tbody`);
-            const activeCheckboxes = activeTbody.querySelectorAll('.progress-check');
+            const checkboxes = document.querySelectorAll('.progress-check');
             const progressBar = document.getElementById('progressBar');
             const statusMessage = document.getElementById('statusMessage');
 
-            let totalWeight = 0;
-            let currentWeight = 0;
+            const totalCourses = checkboxes.length;
+            let completedCount = 0;
             let missingCriticalBlock = false;
 
-            activeCheckboxes.forEach(cb => {
+            checkboxes.forEach(cb => {
                 const tr = cb.closest('tr');
-                const weight = parseFloat(cb.getAttribute('data-weight'));
-                totalWeight += weight;
-
                 if (cb.checked) {
-                    currentWeight += weight;
+                    completedCount++;
                     tr.classList.add('completed-row');
                 } else {
                     tr.classList.remove('completed-row');
-                    if(cb.classList.contains('core-block')) {
+                    if (cb.getAttribute('data-critical') === 'true') {
                         missingCriticalBlock = true;
                     }
                 }
             });
 
-            const percentage = totalWeight > 0 ? Math.round((currentWeight / totalWeight) * 100) : 0;
+            const percentage = totalCourses > 0 ? Math.round((completedCount / totalCourses) * 100) : 0;
             progressBar.style.width = percentage + '%';
 
             if (percentage === 0) {
-                statusMessage.innerHTML = "Select courses completed to evaluate your entry standing.";
+                statusMessage.innerHTML = "Check off your completed courses to audit your junior entry readiness.";
             } else if (percentage < 50) {
-                statusMessage.innerHTML = `<strong>Status: Foundational Phase (${percentage}%)</strong><br>You are chipping away at core math and science prerequisites. Continue tracking your progression!`;
+                statusMessage.innerHTML = `<strong>Current Status: Foundational Grounding (${completedCount}/${totalCourses} Courses)</strong><br>Great start! Keep checking off your foundational math, general education writing, and early science lab blocks.`;
             } else if (percentage < 95) {
                 if (missingCriticalBlock) {
-                    statusMessage.innerHTML = `<strong>Status: Prerequisite Bottleneck Lock (${percentage}%)</strong><br>⚠️ Science and math sequences are looking clean, but missing your institution's core sophomore Engineering Design blocks will cause a structural Fall enrollment lock at the U. Connect with advising!`;
+                    statusMessage.innerHTML = `<strong>Current Status: Prerequisite Sequence Block Warning (${completedCount}/${totalCourses} Courses)</strong><br>⚠️ Notice: Your background tracks are progressing well, but missing key sophomore core components (like <strong>CH EN 2300</strong> or <strong>2800 equivalents</strong>) will halt your junior Fall status, delaying graduation plans by a full academic year.`;
                 } else {
-                    statusMessage.innerHTML = `<strong>Status: Major Core Articulated (${percentage}%)</strong><br>Fantastic work! You have cleared high-stakes major engineering design components. Secure the rest of your list for streamlined entry.`;
+                    statusMessage.innerHTML = `<strong>Current Status: Core Engineering Track Cleared (${completedCount}/${totalCourses} Courses)</strong><br>Excellent work! You have cleared your major's critical sophomore milestones. Finalize the remaining math or science items to verify graduation path timing.`;
                 }
             } else {
-                statusMessage.innerHTML = `🎉 <strong>Status: Fully Prepared for Fall Matriculation! (100%)</strong><br>Every requested articulation class has been cleared. You are verified to lock down junior design tracks!`;
+                statusMessage.innerHTML = `🎉 <strong>Current Status: Fully Prepared for Direct Junior Enrollment! (${completedCount}/${totalCourses} Courses)</strong><br>All major lower-division course expectations have been tracked against the "ChemE Transfer-Articulation-Chart-2023-2024.docx" framework. Welcome to campus!`;
             }
         }
 
-        // Attach global event handlers to all checking inputs dynamically
-        document.querySelectorAll('.progress-check').forEach(checkbox => {
-            checkbox.addEventListener('change', evaluateStatus);
-        });
-
-        // Bootstrap initialization
-        evaluateStatus();
+        window.onload = function() {
+            loadSchoolPathway();
+        };
     </script>
 </body>
 </html>
