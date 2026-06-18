@@ -86,13 +86,13 @@
             list-style: none;
         }
 
+        /* FIXED: Allowed text to wrap naturally to a second line if columns are narrow */
         .semester-courses li {
             padding: 0.4rem 0;
             font-size: 0.82rem;
             border-bottom: 1px dashed #EDF2F7;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            white-space: normal; /* Permits text wrapping */
+            word-wrap: break-word;
         }
 
         .semester-courses li:last-child {
@@ -164,7 +164,7 @@
         .badge-writing { background-color: #718096; }
         .badge-uofu { background-color: var(--u-red); }
         .badge-critical { background-color: #E53E3E; }
-        .badge-not-articulated { background-color: #CC0000; color: white; border: 1px solid #990000; animation: pulse 2s infinite; }
+        .badge-not-articulated { background-color: #CC0000; color: white; border: 1px solid #990000; }
 
         .prereq-marker { color: var(--success-color); font-weight: bold; font-size: 0.95rem; }
 
@@ -346,12 +346,10 @@
             for (const [uCourseCode, courseInfo] of Object.entries(masterArticulationData)) {
                 let sourceEquivalent = courseInfo.maps[selectedSchool] || "Not Articulated";
                 
-                // Active prerequisite checkmark column rendering
                 const juniorStatusCell = courseInfo.juniorPrereq 
                     ? `<span class="prereq-marker">✔️ Required</span>` 
                     : `<span style="color:#A0AEC0;">—</span>`;
 
-                // Handle the Not Articulated formatting switch
                 if (sourceEquivalent === "Not Articulated" || sourceEquivalent === "Not Tracked" || sourceEquivalent === "Not Listed") {
                     sourceEquivalent = `<span class="badge badge-not-articulated">⚠️ Direct Evaluation Needed</span>`;
                 } else {
