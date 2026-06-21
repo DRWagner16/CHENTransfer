@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>University of Utah Chemical Engineering Transfer Portal</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
         :root {
             --u-red: #CC0000;
@@ -165,6 +164,7 @@
         .badge-uofu { background-color: var(--u-red); }
         .badge-critical { background-color: #E53E3E; }
         .badge-not-articulated { background-color: #CC0000; color: white; border: 1px solid #990000; }
+        .badge-slcc-recommend { background-color: #DD6B20; color: white; border: 1px solid #B7791F; }
 
         .prereq-marker { color: var(--success-color); font-weight: bold; font-size: 0.95rem; }
 
@@ -307,37 +307,34 @@
     <footer>
         <p><strong>University of Utah Department of Chemical Engineering</strong></p>
         <p>Office of Advising: <a href="mailto:che-advising@utah.edu">che-advising@utah.edu</a> | <a href="https://che.utah.edu" target="_blank">che.utah.edu</a></p>
-        <p style="margin-top: 1.5rem; font-size: 0.8rem; opacity: 0.6;">&copy; 2026 University of Utah College of Engineering. Course data verified via standard "ChemE Transfer-Articulation-Chart-2023-2024.docx" parameters.</p>
+        <p style="margin-top: 1.5rem; font-size: 0.8rem; opacity: 0.6;">&copy; 2026 University of Utah College of Engineering. Course data verified via standard "ChemE Transfer-Articulation-Chart-2023-2024_DW.docx" parameters.</p>
     </footer>
 
     <script>
-        // Data matrix derived exactly from ChemE Transfer-Articulation-Chart-2023-2024.docx
         const masterArticulationData = {
-            "CHEM 1210": { title: "General Chemistry I", track: "science", critical: false, juniorPrereq: true, maps: { slcc: "CHEM 1210", utahtech: "CHEM 1210", snow: "CHEM 1210", suu: "CHEM 1210", weber: "CHEM 1210", usu: "CHEM 1210", uvu: "CHEM 1210", byu: "CHEM 1054 or higher", ap_score: "Score 3 or higher" } },
-            "CHEM 1215": { title: "Gen Chem I Lab", track: "science", critical: false, juniorPrereq: true, maps: { slcc: "CHEM 1215", utahtech: "CHEM 1215", snow: "CHEM 1215", suu: "CHEM 1215", weber: "CHEM 1210", usu: "CHEM 1215", uvu: "CHEM 1215", byu: "CHEM 107", ap_score: "Turn in AP Lab Notebook" } },
-            "CHEM 1220": { title: "General Chemistry II", track: "science", critical: false, juniorPrereq: true, maps: { slcc: "CHEM 1220", utahtech: "CHEM 1220", snow: "CHEM 1220", suu: "CHEM 1220", weber: "CHEM 1220", usu: "CHEM 1220", uvu: "CHEM 1220", byu: "CHEM 1054 or higher", ap_score: "Score 4 or higher" } },
-            "CHEM 1225": { title: "Gen Chem II Lab", track: "science", critical: false, juniorPrereq: true, maps: { slcc: "CHEM 1225", utahtech: "CHEM 1215", snow: "CHEM 1215", suu: "CHEM 1215", weber: "CHEM 1210", usu: "CHEM 1215", uvu: "CHEM 1215", byu: "CHEM 107", ap_score: "Turn in AP Lab Notebook" } },
-            "CHEM 2310": { title: "Organic Chemistry I", track: "science", critical: false, juniorPrereq: true, maps: { slcc: "CHEM 2310", utahtech: "CHEM 1210", snow: "CHEM 1210", suu: "CHEM 1210", weber: "CHEM 1210", usu: "CHEM 1210", uvu: "CHEM 1210", byu: "CHEM 1054 or higher", ap_score: "Score 5 or higher" } },
-            "CHEM 2315": { title: "Organic Chem I Lab", track: "science", critical: false, juniorPrereq: false, maps: { slcc: "CHEM 2315", utahtech: "CHEM 1215", snow: "CHEM 1215", suu: "CHEM 1215", weber: "CHEM 1210", usu: "CHEM 1215", uvu: "CHEM 1215", byu: "CHEM 107", ap_score: "-" } },
-            "MATH 1010": { title: "Intermediate Algebra", track: "math", critical: false, juniorPrereq: false, maps: { slcc: "MATH 1010", utahtech: "MATH 1010", snow: "MATH 1010", suu: "MATH 1010", weber: "MATH 1010", usu: "MATH 1010", uvu: "MATH 1010", byu: "MATH 112", ap_score: "Not Applicable via AP" } },
+            "CHEM 1210": { title: "General Chemistry I", track: "science", critical: false, juniorPrereq: true, maps: { slcc: "CHEM 1210", utahtech: "CHEM 1210", snow: "CHEM 1210", suu: "CHEM 1210", weber: "CHEM 1210", usu: "CHEM 1210", uvu: "CHEM 1210", byu: "CHEM 105", ap_score: "4 or higher" } },
+            "CHEM 1215": { title: "Gen Chem I Lab", track: "science", critical: false, juniorPrereq: true, maps: { slcc: "CHEM 1215", utahtech: "CHEM 1215", snow: "CHEM 1215", suu: "CHEM 1215", weber: "CHEM 1210", usu: "CHEM 1215", uvu: "CHEM 1215", byu: "CHEM 107", ap_score: "Turn in AP Lab Notebook˄" } },
+            "CHEM 1220": { title: "General Chemistry II", track: "science", critical: false, juniorPrereq: true, maps: { slcc: "CHEM 1220", utahtech: "CHEM 1220", snow: "CHEM 1220", suu: "CHEM 1220", weber: "CHEM 1220", usu: "CHEM 1220", uvu: "CHEM 1220", byu: "CHEM 105", ap_score: "4 or higher" } },
+            "CHEM 1225": { title: "Gen Chem II Lab", track: "science", critical: false, juniorPrereq: true, maps: { slcc: "CHEM 1225", utahtech: "CHEM 1215", snow: "CHEM 1215", suu: "CHEM 1215", weber: "CHEM 1210", usu: "CHEM 1215", uvu: "CHEM 1215", byu: "CHEM 107", ap_score: "Turn in AP Lab Notebook˄" } },
+            "MATH 1010": { title: "Intermediate Algebra", track: "math", critical: false, juniorPrereq: false, maps: { slcc: "MATH 1010", utahtech: "MATH 1010", snow: "MATH 1010", suu: "MATH 1010", weber: "MATH 1010", usu: "MATH 1010", uvu: "MATH 1010", byu: "MATH 112", ap_score: "Not Articulated" } },
             "MATH 1050": { title: "College Algebra", track: "math", critical: false, juniorPrereq: false, maps: { slcc: "MATH 1050", utahtech: "MATH 1050", snow: "MATH 1050", suu: "MATH 1050", weber: "MATH 1050", usu: "MATH 1050", uvu: "MATH 1050", byu: "Standard Level", ap_score: "Score 5 or higher" } },
             "MATH 1060": { title: "Trigonometry", track: "math", critical: false, juniorPrereq: false, maps: { slcc: "MATH 1060", utahtech: "MATH 1060", snow: "MATH 1060", suu: "MATH 1060", weber: "MATH 1060", usu: "MATH 1060", uvu: "MATH 1060", byu: "Not Listed", ap_score: "Not Articulated" } },
             "MATH 1080": { title: "Pre-Calculus", track: "math", critical: false, juniorPrereq: false, maps: { slcc: "MATH 1080", utahtech: "MATH 1080", snow: "MATH 1080", suu: "MATH 1080", weber: "MATH 1080", usu: "MATH 1080", uvu: "MATH 113", byu: "Not Listed", ap_score: "Not Articulated" } },
-            "MATH 1210": { title: "Calculus I", track: "math", critical: false, juniorPrereq: true, maps: { slcc: "MATH 1210", utahtech: "MATH 1210", snow: "MATH 1210", suu: "MATH 1210", weber: "MATH 1210", usu: "MATH 1210", uvu: "MATH 1210", byu: "MATH 112", ap_score: "AB - 4+ / BC - 3+ (or HL 5+)" } },
-            "MATH 1220": { title: "Calculus II", track: "math", critical: false, juniorPrereq: true, maps: { slcc: "MATH 1220", utahtech: "MATH 1220", snow: "MATH 1220", suu: "MATH 1220", weber: "MATH 1220", usu: "MATH 1220", uvu: "MATH 1220", byu: "MATH 113", ap_score: "BC - 4 or higher" } },
+            "MATH 1210": { title: "Calculus I", track: "math", critical: false, juniorPrereq: true, maps: { slcc: "MATH 1210", utahtech: "MATH 1210", snow: "MATH 1210", suu: "MATH 1210", weber: "MATH 1210", usu: "MATH 1210", uvu: "MATH 1210", byu: "MATH 112", ap_score: "AB - 4 or higher / BC - 3 or higher" } },
+            "MATH 1220": { title: "Calculus II", track: "math", critical: false, juniorPrereq: false, maps: { slcc: "MATH 1220", utahtech: "MATH 1220", snow: "MATH 1220", suu: "MATH 1220", weber: "MATH 1220", usu: "MATH 1220", uvu: "MATH 1220", byu: "MATH 113", ap_score: "BC - 4 or higher" } },
             "MATH 2210": { title: "Calculus III", track: "math", critical: false, juniorPrereq: true, maps: { slcc: "MATH 2210", utahtech: "MATH 2210", snow: "MATH 2210", suu: "MATH 2210", weber: "MATH 2210", usu: "MATH 2210", uvu: "MATH 2210", byu: "Not Listed", ap_score: "Not Articulated" } },
             "MATH 2250": { title: "Diff Eq / Linear Alg", track: "math", critical: false, juniorPrereq: true, maps: { slcc: "MATH 2250", utahtech: "MATH 2270 & 2280 OR 2250", snow: "MATH 2250", suu: "MATH 2250", weber: "MATH 2250", usu: "MATH 2250", uvu: "MATH 2270 & 2280 OR 2250", byu: "Not Listed", ap_score: "Not Articulated" } },
-            "PHYS 2210": { title: "Physics Sci & Eng I", track: "science", critical: false, juniorPrereq: true, maps: { slcc: "PHYS 2210", utahtech: "PHYS 2210", snow: "PHYS 2210", suu: "PHYS 2210", weber: "PHYS 2210", usu: "PHYS 2210", uvu: "PHYS 2210", byu: "PHSCS 121", ap_score: "Physics C Mech: 4 or higher" } },
-            "PHYS 2220": { title: "Physics Sci & Eng II", track: "science", critical: false, juniorPrereq: true, maps: { slcc: "PHYS 2220", utahtech: "PHYS 2220", snow: "PHYS 2220", suu: "PHYS 2220", weber: "PHYS 2220", usu: "PHYS 2220", uvu: "PHYS 2220", byu: "PHSCS 220", ap_score: "Physics C E&M: 4 or higher" } },
+            "PHYS 2210": { title: "Physics Sci & Eng I", track: "science", critical: false, juniorPrereq: true, maps: { slcc: "PHYS 2210", utahtech: "PHYS 2210", snow: "PHYS 2210", suu: "PHYS 2210", weber: "PHYS 2210", usu: "PHYS 2210", uvu: "PHYS 2210", byu: "PHSCS 121", ap_score: "Physics C Mechanics: 4 or higher" } },
+            "PHYS 2220": { title: "Physics Sci & Eng II", track: "science", critical: false, juniorPrereq: true, maps: { slcc: "PHYS 2220", utahtech: "PHYS 2220", snow: "PHYS 2220", suu: "PHYS 2220", weber: "PHYS 2220", usu: "PHYS 2220", uvu: "PHYS 2220", byu: "PHSCS 220", ap_score: "Physics C Electricity & Magnetism: 4 or higher" } },
             "WRTG 1010": { title: "Intro to Writing", track: "writing", critical: false, juniorPrereq: false, maps: { slcc: "ENGL 1010", utahtech: "ENGL 1010", snow: "ENGL 1010", suu: "ENGL 1010", weber: "ENGL 1010", usu: "ENGL 1010", uvu: "ENGL 1010", byu: "Not Listed", ap_score: "4 or higher" } },
-            "WRTG 2010": { title: "Intermediate Writing", track: "writing", critical: false, juniorPrereq: true, maps: { slcc: "ENGL 2010 or 2100", utahtech: "ENGL 2010", snow: "ENGL 2010", suu: "ENGL 2010", weber: "ENGL 2010", usu: "ENGL 2010", uvu: "ENGL 2010", byu: "ENGL 150", ap_score: "4 or higher ǂ" } },
-            "CH EN 1703": { title: "Intro to ChE Computing", track: "uofu", critical: true, juniorPrereq: true, maps: { slcc: "CHE 1040", utahtech: "CS 1410 or CS 3430", snow: "ENGR 1400", suu: "CSIS 1300", weber: "CS 1400", usu: "CS 1410 or CS 3430", uvu: "CS 1400", byu: "CH EN 170" } },
-            "CH EN 1705": { title: "Design & Innovation", track: "uofu", critical: true, juniorPrereq: true, maps: { slcc: "PHYS 2215, 2225, & CHEM 2315*", utahtech: "PHYS 2215, 2225, & CHEM 2315*", snow: "PHYS 2215, 2225, & CHEM 2315*", suu: "PHYS 2215, 2225, & CHEM 2315*", weber: "PHYS 2215, 2225, & CHEM 2315*", usu: "PHYS 2215, 2225, & CHEM 2315*", uvu: "PHYS 2215, 2225, & CHEM 2315*", byu: "Not Tracked" } },
+            "WRTG 2010": { title: "Intermediate Writing", track: "writing", critical: false, juniorPrereq: false, maps: { slcc: "ENGL 2010 or 2100", utahtech: "ENGL 2010", snow: "ENGL 2010", suu: "ENGL 2010", weber: "ENGL 2010", usu: "ENGL 2010", uvu: "ENGL 2010", byu: "ENGL 150", ap_score: "4 or higher ǂ" } },
+            "CH EN 1703": { title: "Intro to ChE Computing", track: "uofu", critical: true, juniorPrereq: true, maps: { slcc: "CHE 1040", utahtech: "Recommend via SLCC**", snow: "CS 1410 or CS 3430", suu: "Recommend via SLCC**", weber: "ENGR 1400", usu: "CSIS 1300", uvu: "CS 1400", byu: "CS 1410 or CS 3430" } },
+            "CH EN 1705": { title: "Design & Innovation", track: "uofu", critical: true, juniorPrereq: true, maps: { slcc: "PHYS 2215, 2225, and CHEM 2315*", utahtech: "PHYS 2215, 2225, and CHEM 2315*", snow: "PHYS 2215, 2225, and CHEM 2315*", suu: "PHYS 2215, 2225, and CHEM 2315*", weber: "PHYS 2215, 2225, and CHEM 2315*", usu: "PHYS 2215, 2225, and CHEM 2315*", uvu: "PHYS 2215, 2225, and CHEM 2315*", byu: "Not Tracked" } },
             "CH EN 2300": { title: "Thermodynamics I", track: "uofu", critical: true, juniorPrereq: true, maps: { slcc: "ENGR 2300", utahtech: "MAE 2300", snow: "ENGR 2300", suu: "ME 3200", weber: "ENGR 2300", usu: "MAE 2300", uvu: "ENGR 2300", byu: "ME EN 321" } },
-            "CH EN 2450": { title: "Numerical Methods (Python-based)", track: "uofu", critical: true, juniorPrereq: true, maps: { slcc: "CHE 2460", utahtech: "ENGR 2450", snow: "ENGR 2450", suu: "Not Articulated", weber: "Not Articulated", usu: "ENGR 2450", uvu: "ENGR 2450", byu: "CH EN 263" } },
-            "CH EN 2550": { title: "Stats for Chemical Eng.", track: "uofu", critical: true, juniorPrereq: true, maps: { slcc: "ENGR 2550", utahtech: "Not Articulated", snow: "Not Articulated", suu: "Not Articulated", weber: "Not Articulated", usu: "Not Articulated", uvu: "Not Articulated", byu: "Not Articulated" } },
-            "CH EN 2800": { title: "Process Eng Fund.", track: "uofu", critical: true, juniorPrereq: true, maps: { slcc: "CHE 2800", utahtech: "Not Articulated", snow: "Not Articulated", suu: "Not Articulated", weber: "Not Articulated", usu: "Not Articulated", uvu: "Not Articulated", byu: "CH EN 273" } },
-            "CH EN 2953": { title: "Undergrad Seminar", track: "uofu", critical: false, juniorPrereq: false, maps: { slcc: "ENGR 2950", utahtech: "Not Articulated", snow: "Not Articulated", suu: "Not Articulated", weber: "Not Articulated", usu: "Not Articulated", uvu: "Not Articulated", byu: "CH EN 291" } }
+            "CH EN 2450": { title: "Numerical Methods (Python-based)", track: "uofu", critical: true, juniorPrereq: true, maps: { slcc: "CHE 2460", utahtech: "ENGR 2450", snow: "ENGR 2450", suu: "Recommend via SLCC**", weber: "Recommend via SLCC**", usu: "ENGR 2450", uvu: "ENGR 2450", byu: "CH EN 263" } },
+            "CH EN 2550": { title: "Stats for Chemical Eng.", track: "uofu", critical: true, juniorPrereq: true, maps: { slcc: "ENGR 2550", utahtech: "Recommend via SLCC**", snow: "Recommend via SLCC**", suu: "Recommend via SLCC**", weber: "Recommend via SLCC**", usu: "Recommend via SLCC**", uvu: "Recommend via SLCC**", byu: "Not Tracked" } },
+            "CH EN 2800": { title: "Process Eng Fund.", track: "uofu", critical: true, juniorPrereq: true, maps: { slcc: "CHE 2800", utahtech: "Recommend via SLCC**", snow: "Recommend via SLCC**", suu: "Recommend via SLCC**", weber: "Recommend via SLCC**", usu: "Recommend via SLCC**", uvu: "Recommend via SLCC**", byu: "CH EN 273" } },
+            "CH EN 2953": { title: "Undergrad Seminar", track: "uofu", critical: false, juniorPrereq: false, maps: { slcc: "ENGR 2950", utahtech: "Not Tracked", snow: "Not Tracked", suu: "Not Tracked", weber: "Not Tracked", usu: "Not Tracked", uvu: "Not Tracked", byu: "CH EN 291" } }
         };
 
         function loadSchoolPathway() {
@@ -354,7 +351,9 @@
                     ? `<span class="prereq-marker">✔️ Required</span>` 
                     : `<span style="color:#A0AEC0;">—</span>`;
 
-                if (sourceEquivalent === "Not Articulated" || sourceEquivalent === "Not Tracked" || sourceEquivalent === "Not Listed" || sourceEquivalent === "-") {
+                if (sourceEquivalent === "Recommend via SLCC**") {
+                    sourceEquivalent = `<span class="badge badge-slcc-recommend">⚠️ Recommend via SLCC</span>`;
+                } else if (sourceEquivalent === "Not Articulated" || sourceEquivalent === "Not Tracked" || sourceEquivalent === "Not Listed" || sourceEquivalent === "-") {
                     sourceEquivalent = `<span class="badge badge-not-articulated">⚠️ Direct Evaluation Needed</span>`;
                 } else {
                     sourceEquivalent = `<strong>${sourceEquivalent}</strong>`;
@@ -363,7 +362,6 @@
                 const row = document.createElement('tr');
                 if (courseInfo.critical) row.style.backgroundColor = "#FFF5F5";
 
-                // FIXED: Included data-junior-prereq attribute assignment so the progress logic functions correctly
                 row.innerHTML = `
                     <td style="text-align: center;">
                         <input type="checkbox" class="progress-check row-checkbox" 
@@ -381,6 +379,7 @@
             const footnoteContainer = document.getElementById('matrix-footnotes');
             let footnoteHTML = `<strong>Matrix Footnotes & Articulation System Caveats:</strong><br>`;
             footnoteHTML += `* Students must take 3 regional labs (PHYS 2215, PHYS 2225, and CHEM 2315) to completely satisfy the U's CH EN 1705 requirement.<br>`;
+            footnoteHTML += `** If introductory chemical engineering courses are not available at your school, SLCC is a recommended resource to satisfy the CH EN-specific courses to prepare you for Junior year at the University of Utah.<br>`;
             footnoteHTML += `*** Transfer Undergraduate Seminar courses can fulfill exactly one required seminar milestone, but not both.<br>`;
             
             if (selectedSchool === 'ap_score') {
