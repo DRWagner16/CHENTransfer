@@ -401,19 +401,20 @@
             const checkboxes = document.querySelectorAll('.progress-check');
             const progressBar = document.getElementById('progressBar');
             const statusMessage = document.getElementById('statusMessage');
-
-            let totalJuniorRequired = 0;
+        
+            // 👇 FIX: Ensure this is spelled correctly with an "i"
+            let totalJuniorRequired = 0; 
             let completedJuniorRequired = 0;
             let missingCriticalBlock = false;
-
+        
             checkboxes.forEach(cb => {
                 const tr = cb.closest('tr');
                 const isJuniorPrereq = cb.getAttribute('data-junior-prereq') === 'true';
-
+        
                 if (isJuniorPrereq) {
                     totalJuniorRequired++;
                 }
-
+        
                 if (cb.checked) {
                     tr.classList.add('completed-row');
                     if (isJuniorPrereq) {
@@ -426,10 +427,10 @@
                     }
                 }
             });
-
+        
             const percentage = totalJuniorRequired > 0 ? Math.round((completedJuniorRequired / totalJuniorRequired) * 100) : 0;
             progressBar.style.width = percentage + '%';
-
+        
             if (percentage === 0) {
                 statusMessage.innerHTML = "Check off your completed courses to audit your junior entry readiness.";
             } else if (percentage < 50) {
