@@ -384,9 +384,6 @@
             footnoteHTML += `* Students must take 3 regional labs (PHYS 2215, PHYS 2225, and CHEM 2315) to completely satisfy the U's CH EN 1705 requirement.<br>`;
             footnoteHTML += `** If introductory chemical engineering courses are not available at your school, SLCC is a recommended resource to satisfy the CH EN-specific courses to prepare you for Junior year at the University of Utah.<br>`;
             footnoteHTML += `*** Transfer Undergraduate Seminar courses can fulfill exactly one required seminar milestone, but not both.<br>`;
-            <p>Check the <a href="https://registrar.utah.edu/transfer-credit-equivalency-guide.php">Transfer Credit Equivalency Guide</a> for more courses.</p>
-            <p>Check the <a href="https://admissions.utah.edu/information-resources/prior-learning-credit/advanced-placement-credit/">Advanced Placement (AP) Guide</a> for more courses.</p>
-            <p>Check the <a href="https://admissions.utah.edu/information-resources/prior-learning-credit/international-baccalaureate-ib-credit/">International Baccalaureate (IB) Guide</a> for more courses.</p>    
             
             if (selectedSchool === 'ap_score') {
                 footnoteHTML += `˄ Save your physical Lab notebook and turn it in directly to the U Chemistry department by August 6th for Fall curriculum clearance evaluations.<br>`;
@@ -401,20 +398,19 @@
             const checkboxes = document.querySelectorAll('.progress-check');
             const progressBar = document.getElementById('progressBar');
             const statusMessage = document.getElementById('statusMessage');
-        
-            // 👇 FIX: Ensure this is spelled correctly with an "i"
-            let totalJuniorRequired = 0; 
+
+            let totalJuniorRequired = 0;
             let completedJuniorRequired = 0;
             let missingCriticalBlock = false;
-        
+
             checkboxes.forEach(cb => {
                 const tr = cb.closest('tr');
                 const isJuniorPrereq = cb.getAttribute('data-junior-prereq') === 'true';
-        
+
                 if (isJuniorPrereq) {
                     totalJuniorRequired++;
                 }
-        
+
                 if (cb.checked) {
                     tr.classList.add('completed-row');
                     if (isJuniorPrereq) {
@@ -427,10 +423,10 @@
                     }
                 }
             });
-        
+
             const percentage = totalJuniorRequired > 0 ? Math.round((completedJuniorRequired / totalJuniorRequired) * 100) : 0;
             progressBar.style.width = percentage + '%';
-        
+
             if (percentage === 0) {
                 statusMessage.innerHTML = "Check off your completed courses to audit your junior entry readiness.";
             } else if (percentage < 50) {
