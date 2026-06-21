@@ -164,7 +164,7 @@
         .badge-writing { background-color: #718096; }
         .badge-uofu { background-color: var(--u-red); }
         .badge-critical { background-color: #E53E3E; }
-        .badge-not-articulated { background-color: #CC0000; color: white; border: 1px solid #990000; }
+        .badge-not-articulated { background-color: #b9fac7; color: white; border: 1px solid #990000; }
         .badge-slcc-recommend { background-color: #DD6B20; color: white; border: 1px solid #B7791F; }
 
         .prereq-marker { color: var(--success-color); font-weight: bold; font-size: 0.95rem; }
@@ -245,7 +245,7 @@
                 <ul class="semester-courses">
                     <li><strong>CH EN 2800</strong> - Process Engineering Fund.</li>
                     <li><strong>CH EN 2550</strong> - Stats for Chemical Eng.</li>
-                    <li><strong>CH EN 2953</strong> - Undergrad Seminar (suggested)</li>
+                    <li><strong>CH EN 2955</strong> - Undergrad Seminar (suggested)</li>
                     <li><strong>CHEM 2310</strong> - Organic Chemistry I</li>
                 </ul>
             </div>
@@ -307,7 +307,7 @@
 
     <footer>
         <p><strong>University of Utah Department of Chemical Engineering</strong></p>
-        <p>Office of Advising: <a href="mailto:che-advising@utah.edu">che-advising@utah.edu</a> | <a href="https://che.utah.edu" target="_blank">che.utah.edu</a></p>
+        <p>Contact Advising: <a href="mailto:che-advising@utah.edu">che-advising@utah.edu</a> | <a href="https://www.che.utah.edu/undergraduate-advising/" target="_blank"> CH EN Advising Page</a></p>
         <p style="margin-top: 1.5rem; font-size: 0.8rem; opacity: 0.6;">&copy; 2026 University of Utah College of Engineering.</p>
     </footer>
 
@@ -357,7 +357,7 @@
                 if (sourceEquivalent === "Recommend via SLCC**") {
                     sourceEquivalent = `<span class="badge badge-slcc-recommend">⚠️ Recommend via SLCC</span>`;
                 } else if (sourceEquivalent === "Not Articulated" || sourceEquivalent === "Not Tracked" || sourceEquivalent === "Not Listed" || sourceEquivalent === "-") {
-                    sourceEquivalent = `<span class="badge badge-not-articulated">⚠️ Direct Evaluation Needed</span>`;
+                    sourceEquivalent = `<span class="badge badge-not-articulated">Review Transfer Guides Below</span>`;
                 } else {
                     sourceEquivalent = `<strong>${sourceEquivalent}</strong>`;
                 }
